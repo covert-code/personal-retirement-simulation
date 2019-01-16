@@ -1,0 +1,31 @@
+<nav id="headerNavbar" class="navbar navbar-expand-md navbar-dark bg-dark box-shadow">
+  <a class="navbar-brand" href="#">Personal Retirement Simulation</a>
+  <button class="navbar-toggler" type="button"
+    (click)="isHeaderCollapsed = !isHeaderCollapsed"
+    [attr.aria-expanded]="!isHeaderCollapsed" aria-controls="collapseHeader"
+    aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div id="collapseHeader" class="collapse navbar-collapse" [ngbCollapse]="isHeaderCollapsed">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/survey.html">Survey</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="http://www.google.com/">Google</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="http://localhost:4200/survey.html">Survey Localhost</a>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-md-0">
+      <input class="form-control" type="text" placeholder="Search">
+    </form>
+  </div>
+</nav>
+
+<router-outlet></router-outlet>
