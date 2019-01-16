@@ -7,12 +7,16 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { IndexJumbotronComponent } from './index.jumbotron/index.jumbotron.component';
+import { SurveyFormComponent } from './survey.form/survey.form.component';
+import { ParticipantdataFormComponent } from './participantdata.form/participantdata.form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    IndexJumbotronComponent
+    IndexJumbotronComponent,
+    SurveyFormComponent,
+    ParticipantdataFormComponent
   ],
   imports: [
     BrowserModule,
@@ -23,7 +27,9 @@ import { IndexJumbotronComponent } from './index.jumbotron/index.jumbotron.compo
   bootstrap: [
     AppComponent,
     HeaderComponent,
-    IndexJumbotronComponent
+    IndexJumbotronComponent,
+    SurveyFormComponent,
+    ParticipantdataFormComponent
   ]
 })
 export class AppModule { }
