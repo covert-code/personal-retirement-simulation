@@ -5,9 +5,9 @@ import { IndexJumbotronComponent } from './index.jumbotron/index.jumbotron.compo
 import { ParticipantdataFormComponent } from './participantdata.form/participantdata.form.component';
 
 const routes: Routes = [
-  { path: 'home', component: IndexJumbotronComponent },
+  { path: '', component: IndexJumbotronComponent },
   { path: 'survey', component: SurveyFormComponent },
-  { path: 'participantdata', component: ParticipantdataFormComponent }
+  { path: 'about-you', component: ParticipantdataFormComponent }
 ];
 
 @NgModule({

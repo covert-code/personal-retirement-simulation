@@ -9,6 +9,9 @@ import { HeaderComponent } from './header/header.component';
 import { IndexJumbotronComponent } from './index.jumbotron/index.jumbotron.component';
 import { SurveyFormComponent } from './survey.form/survey.form.component';
 import { ParticipantdataFormComponent } from './participantdata.form/participantdata.form.component';
+import { InputService } from './services/input.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 
 @NgModule({
   declarations: [
@@ -21,9 +24,13 @@ import { ParticipantdataFormComponent } from './participantdata.form/participant
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
+    FormsModule,
+    ReactiveFormsModule,
   ],
-  providers: [],
+  providers: [
+    InputService
+  ],
   bootstrap: [
     AppComponent,
     HeaderComponent,

@@ -1,16 +1,17 @@
-<div class="container">
-  <form>
+<div class="container my-4">
+  <h1 class="display-3">Survey</h1>
+  <form [formGroup]="form" class="mt-4">
     <div class="form-group">
       <label for="surveyRetirementAge">Retirement Age</label>
-      <input type="email" class="form-control" id="surveyRetirementAge">
+      <input class="form-control" id="surveyRetirementAge">
     </div>
     <div class="form-group">
       <label for="surveyRetirementGoal">Retirement Goal</label>
-      <input type="email" class="form-control" id="surveyRetirementGoal">
+      <input class="form-control" id="surveyRetirementGoal">
     </div>
     <div class="form-group">
       <label for="surveyRetirementCurrentSavings">Currently saved for Retirement (estimate):</label>
-      <input type="email" class="form-control" id="surveyRetirementCurrentSavings">
+      <input class="form-control" id="surveyRetirementCurrentSavings">
     </div>
     <div class="form-group">
       <label for="surveySocialSecurityReceived">Do you receive social security benefits?</label>
@@ -21,7 +22,7 @@
     </div>
     <div class="form-group">
       <label for="surveyEmployerSalaryDeposit">Approximate percent of your salary that your employer deposits (if appropriate)?</label>
-      <input type="email" class="form-control" id="surveyEmployerSalaryDeposit">
+      <input class="form-control" id="surveyEmployerSalaryDeposit">
     </div>
     <div class="form-group">
       <label for="surveyRetirementConcern">Concerns that you might not live to start retirement?</label>
