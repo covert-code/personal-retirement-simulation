@@ -4,16 +4,3 @@
     url("../../assets/img/jumbotron.jpg");
   background-size: cover;
 }
-
-.jumbotron h1 {
-  font-size:63px;
-  margin-top: 20px;
-  margin-bottom: 10px;
-}
-
-.jumbotron p {
-  margin-bottom: 15px;
-  font-size: 18px;
-  font-weight: 250;
-  margin-bottom: 15px;
-}
