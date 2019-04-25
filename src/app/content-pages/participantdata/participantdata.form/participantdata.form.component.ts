@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { InputService } from '../../../services/input.service';
-import { IParticipant } from '../../../models/IParticipant';
+import { InputService } from 'src/app/services/input.service';
+import { IParticipant } from 'src/app/models/IParticipant';
 
 @Component({
   selector: 'app-participantdata-form',
