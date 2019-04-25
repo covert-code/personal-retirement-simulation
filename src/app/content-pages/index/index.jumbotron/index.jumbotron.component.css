@@ -1,6 +1,6 @@
 .jumbotron {
   background-image:
     linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)),
-    url("../../assets/img/jumbotron.jpg");
+    url("../../../../assets/img/jumbotron.jpg");
   background-size: cover;
 }

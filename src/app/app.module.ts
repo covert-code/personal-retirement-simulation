@@ -10,14 +10,14 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 // Index Page
-import { IndexComponent } from './index/index.component';
-import { IndexJumbotronComponent } from './index.jumbotron/index.jumbotron.component';
-import { IndexCardsComponent } from './index.cards/index.cards.component';
+import { IndexComponent } from './content-pages/index/index.component';
+import { IndexJumbotronComponent } from './content-pages/index/index.jumbotron/index.jumbotron.component';
+import { IndexCardsComponent } from './content-pages/index/index.cards/index.cards.component';
 // Forms (and Dependencies)
 import { InputService } from './services/input.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { SurveyFormComponent } from './survey.form/survey.form.component';
-import { ParticipantdataFormComponent } from './participantdata.form/participantdata.form.component';
+import { SurveyFormComponent } from './content-pages/survey/survey.form/survey.form.component';
+import { ParticipantdataFormComponent } from './content-pages/participantdata/participantdata.form/participantdata.form.component';
 
 
 @NgModule({

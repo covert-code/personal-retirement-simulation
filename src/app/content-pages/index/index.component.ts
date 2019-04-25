@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { IndexJumbotronComponent } from '../index.jumbotron/index.jumbotron.component';
-import { IndexCardsComponent } from '../index.cards/index.cards.component';
+
+// subcomponents
+import { IndexJumbotronComponent } from './index.jumbotron/index.jumbotron.component';
+import { IndexCardsComponent } from './index.cards/index.cards.component';
 
 @Component({
   selector: 'app-index',
