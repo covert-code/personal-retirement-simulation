@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { SurveyFormComponent } from './survey.form/survey.form.component';
-import { IndexJumbotronComponent } from './index.jumbotron/index.jumbotron.component';
+import { IndexComponent } from './index/index.component';
 import { ParticipantdataFormComponent } from './participantdata.form/participantdata.form.component';
 
 const routes: Routes = [
-  { path: '', component: IndexJumbotronComponent },
+  { path: '', component: IndexComponent },
   { path: 'survey', component: SurveyFormComponent },
   { path: 'about-you', component: ParticipantdataFormComponent }
 ];
