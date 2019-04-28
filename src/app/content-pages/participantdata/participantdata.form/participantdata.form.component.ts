@@ -22,9 +22,11 @@ export class ParticipantdataFormComponent {
   });
 
   constructor() {
+    //this.inputService = new InputService();
   }
 
   logFormContents() {
+    //this.inputService.postParticipantData(this.form.value);
     console.log(this.form.value);
   }
 }
