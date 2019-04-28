@@ -42,7 +42,12 @@ export class ParticipantdataFormComponent {
     marital: new FormControl(),
   });
 
-  commitFormContents() {
+  validateFormContents(): boolean {
+    console.log(this.form.value);
+    return true; // todo
+  }
+
+  commitFormContents(): void {
     this.participantData.participant_fname = this.form.get('firstName').value;
     this.participantData.participant_initial = this.form.get('initial').value;
     this.participantData.participant_lname = this.form.get('lastName').value;
@@ -57,9 +62,10 @@ export class ParticipantdataFormComponent {
   }
 
   logFormContents() {
-    this.commitFormContents();
-    console.log(this.participantData);
-    this.signupService.postParticipantData(this.participantData);
+    if (this.validateFormContents()) {
+      this.commitFormContents();
+      this.signupService.postParticipantData(this.participantData);
+    }  
   }
 
   initializeFormContents() {
