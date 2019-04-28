@@ -3,10 +3,19 @@ const config = require('./config/server.json')
 
 // Express
 const express = require('express')
-const app = express()
 const port = config.express_port
 
 // Imports
+
+// Cross-Origin Resource Sharing
+const cors = require('cors')
+var corsOptions = {
+	origin: true,
+	optionsSuccessStatus: 200
+}
+
+
+const app = express()
 
 // Endpoints
 app.get('/', (req, res) => {
@@ -20,6 +29,7 @@ app.post('/postParticipantData', (req, res) => {
 })
 
 // Execute
+app.use(cors(corsOptions))
 app.listen(port, () => console.log(
 	`Personal Retirement Simulation express server listening on port ${port}!`
 ))
