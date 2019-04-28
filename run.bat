@@ -1,2 +1,2 @@
-start node server.js
+start run_srv.bat
 ng serve -o
