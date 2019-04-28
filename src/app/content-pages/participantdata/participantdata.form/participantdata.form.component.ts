@@ -11,7 +11,11 @@ import { IParticipant } from 'src/app/models/IParticipant';
 export class ParticipantdataFormComponent {
 
   participantData: IParticipant;
-  inputService: InputService;
+  //inputService: InputService;
+
+  constructor(private inputService: InputService) {
+    this.initializeFormContents();
+  }
 
   form = new FormGroup({
     name: new FormControl(),
@@ -21,12 +25,18 @@ export class ParticipantdataFormComponent {
     marital: new FormControl(),
   });
 
-  constructor() {
-    //this.inputService = new InputService();
+  logFormContents() {
+    console.log(this.inputService.postParticipantData(this.form.value));
   }
 
-  logFormContents() {
-    //this.inputService.postParticipantData(this.form.value);
-    console.log(this.form.value);
+  initializeFormContents() {
+    const preloadData : IParticipant = this.inputService.getParticipantData();
+    if (preloadData.user_id != 0) {
+      this.form.get('name').setValue(preloadData.user_name);
+      this.form.get('address').setValue(preloadData.participant_addr_1);
+      this.form.get('birthday').setValue(preloadData.participant_birthdate);
+      this.form.get('income').setValue(preloadData.participant_income);
+      this.form.get('marital').setValue(preloadData.participant_marital);
+    }
   }
 }

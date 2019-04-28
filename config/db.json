@@ -1,5 +1,6 @@
 {
 	"db_port":3308,
+	"db_name":"retirement_simulation_study",
 	"db_user":"test",
 	"db_pw":"test0!AA",
 }
