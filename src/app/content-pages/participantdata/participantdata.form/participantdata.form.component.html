@@ -1,18 +1,20 @@
 <div class="container my-4">
   <h1 class="display-4">User Information</h1>
   <form [formGroup]="form" class="needs-validation mt-4">
-    <div class="form-row">
-      <div class="col-md-5 mb-3">
-        <label>First name</label>
-        <input formControlName="firstName" class="form-control" placeholder="Jane">
-      </div>
-      <div class="col-md-2 mb-3">
-        <label>Initial</label>
-        <input formControlName="initial" class="form-control" placeholder="F">
-      </div>
-      <div class="col-md-5 mb-3">
-        <label>Last Name</label>
-        <input formControlName="lastName" class="form-control" placeholder="Doe">
+    <div class="form-group">
+      <div class="form-row">
+        <div class="col-md-5 mb-3">
+          <label>First name</label>
+          <input formControlName="firstName" class="form-control" placeholder="Jane">
+        </div>
+        <div class="col-md-2 mb-3">
+          <label>Initial</label>
+          <input formControlName="initial" class="form-control" placeholder="F">
+        </div>
+        <div class="col-md-5 mb-3">
+          <label>Last Name</label>
+          <input formControlName="lastName" class="form-control" placeholder="Doe">
+        </div>
       </div>
     </div>
 
@@ -37,23 +39,29 @@
     </div>
     
     <div class="form-group">
-      <label>Birthday</label>
-      <input formControlName="birthday" class="form-control" placeholder="MM/DD/YYYY">
-    </div>
-    
-    <div class="form-row">
-      <div class="col-md-6 mb-3">
-        <label>Income</label>
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="inputGroupPrepend">$</span>
-          </div>
-          <input formControlName="income" class="form-control">
+      <div class="form-row">
+        <div class="col-md-4 mb-3">
+          <label>Birthday</label>
+          <input formControlName="birthday" class="form-control" placeholder="MM/DD/YYYY">
         </div>
-      </div>
-      <div class="col-md-6 mb-3">
-        <label>Marital</label>
-        <input formControlName="marital" class="form-control">
+        <div class="col-md-5 mb-3">
+          <label>Income</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroupPrepend">$</span>
+            </div>
+            <input formControlName="income" class="form-control">
+          </div>
+        </div>
+        <div class="col-md-3 mb-3">
+          <label>Marital</label>
+          <select formControlName="marital" class="custom-select">
+            <option value="1">Single</option>
+            <option value="2">Married</option>
+            <option value="3">Divorced</option>
+            <option value="4">Other</option>
+          </select>
+        </div>
       </div>
     </div>
     
