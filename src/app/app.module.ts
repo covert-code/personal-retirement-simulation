@@ -15,11 +15,11 @@ import { IndexComponent } from './content-pages/index/index.component';
 import { IndexJumbotronComponent } from './content-pages/index/index.jumbotron/index.jumbotron.component';
 import { IndexCardsComponent } from './content-pages/index/index.cards/index.cards.component';
 // Forms (and Dependencies)
-import { InputService } from './services/input.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SurveyFormComponent } from './content-pages/survey/survey.form/survey.form.component';
 import { ParticipantdataFormComponent } from './content-pages/participantdata/participantdata.form/participantdata.form.component';
-
+// Services
+import { SignupService } from './services/signup.service';
 
 @NgModule({
   declarations: [
@@ -41,7 +41,7 @@ import { ParticipantdataFormComponent } from './content-pages/participantdata/pa
     ReactiveFormsModule,
   ],
   providers: [
-    InputService
+    SignupService
   ],
   bootstrap: [
     AppComponent,

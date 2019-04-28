@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
 import { IParticipant } from 'src/app/models/IParticipant';
-import { Observable } from 'rxjs'
 
 const expressPort = 3000;
 
 @Injectable({
   providedIn: 'root'
 })
-export class InputService {
+export class SignupService {
   constructor(private http: HttpClient) { }
 
   getParticipantData(): IParticipant {
@@ -28,7 +29,10 @@ export class InputService {
     return participantData;
   }
 
-  postParticipantData(data: IParticipant) {
-    return this.http.post('http://localhost:3000/postParticipantData', data);
+  postParticipantData(data: IParticipant): Observable<IParticipant> {
+    return this.http.post<IParticipant>(
+    	'http://localhost:3000/postParticipantData',
+    	data
+    );
   }
 }

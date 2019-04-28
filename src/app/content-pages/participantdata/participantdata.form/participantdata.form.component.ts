@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { InputService } from 'src/app/services/input.service';
+import { SignupService } from 'src/app/services/signup.service';
 import { IParticipant } from 'src/app/models/IParticipant';
 
 @Component({
@@ -11,9 +11,9 @@ import { IParticipant } from 'src/app/models/IParticipant';
 export class ParticipantdataFormComponent {
 
   participantData: IParticipant;
-  //inputService: InputService;
+  //inputService: SignupService;
 
-  constructor(private inputService: InputService) {
+  constructor(private inputService: SignupService) {
     this.initializeFormContents();
   }
 
