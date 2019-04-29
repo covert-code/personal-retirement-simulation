@@ -81,19 +81,4 @@ export class ParticipantdataFormComponent {
   navigateNext() : void {
     this.router.navigate(['/survey']);
   }
-
-  initializeFormContents() {
-    const preloadData : IParticipant = this.signupService.getParticipantData();
-    this.form.get('firstName').setValue(preloadData.participant_fname);
-    this.form.get('initial').setValue(preloadData.participant_initial);
-    this.form.get('lastName').setValue(preloadData.participant_lname);
-    this.form.get('address1').setValue(preloadData.participant_addr_1);
-    this.form.get('address2').setValue(preloadData.participant_addr_2);
-    this.form.get('addressCity').setValue(preloadData.participant_addr_city);
-    this.form.get('addressState').setValue(preloadData.participant_addr_state);
-    this.form.get('addressZip').setValue(preloadData.participant_addr_zip);
-    this.form.get('birthday').setValue(preloadData.participant_birthdate);
-    this.form.get('income').setValue(preloadData.participant_income);
-    this.form.get('marital').setValue(preloadData.participant_marital);
-  }
 }
