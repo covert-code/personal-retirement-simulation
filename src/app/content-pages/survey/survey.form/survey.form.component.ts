@@ -68,4 +68,3 @@ export class SurveyFormComponent {
     //this.router.navigate(['/survey']);
   }
 }
-}
