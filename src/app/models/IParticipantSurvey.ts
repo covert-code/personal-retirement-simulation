@@ -1,5 +1,4 @@
 export interface IParticipantSurvey {
-    user_id: number;
     participant_ret_age: number;
     participant_ret_goal: number;
     participant_ret_curr_savings: number;
