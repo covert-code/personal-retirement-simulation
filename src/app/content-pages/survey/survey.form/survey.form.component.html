@@ -1,37 +1,65 @@
 <div class="container my-4">
   <h1 class="display-4">Retirement Survey</h1>
   <form class="mt-4">
-    <div class="form-group">
-      <label for="surveyRetirementAge">Retirement Age</label>
-      <input class="form-control" id="surveyRetirementAge">
+    <div class="form-row">
+      <div class="col-md-4 mb-3">
+        <label>Retirement Age</label>
+        <input class="form-control">
+        <small class="form-text text-muted">At what age do you plan to retire?</small>
+      </div>
+      <div class="col-md-4 mb-3">
+        <label>Social Security</label>
+        <select class="form-control">
+          <option>Yes</option>
+          <option>No</option>
+        </select>
+        <small class="form-text text-muted">Do you receive Social Security benefits?</small>
+      </div>
+      <div class="col-md-4 mb-3">
+        <label>Concerns</label>
+        <select class="form-control">
+          <option>Yes</option>
+          <option>No</option>
+        </select>
+        <small class="form-text text-muted">Concerned about living to start retirement?</small>
+      </div>
     </div>
-    <div class="form-group">
-      <label for="surveyRetirementGoal">Retirement Goal</label>
-      <input class="form-control" id="surveyRetirementGoal">
+    <div class="form-row">
+      <div class="col-md-6 mb-3">
+        <label>Retirement Goal</label>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">$</span>
+          </div>
+          <input formControlName="income" class="form-control">
+        </div>
+        <small class="form-text text-muted">What is your goal for retirement savings?</small>
+      </div>
+      <div class="col-md-6 mb-3">
+        <label>Current Savings</label>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">$</span>
+          </div>
+          <input formControlName="income" class="form-control">
+        </div>
+        <small class="form-text text-muted">Approximately how much do you have saved so far?</small>
+      </div>
     </div>
-    <div class="form-group">
-      <label for="surveyRetirementCurrentSavings">Currently saved for Retirement (estimate):</label>
-      <input class="form-control" id="surveyRetirementCurrentSavings">
+    <div class="form-row">
+      <div class="col-md-12 mb-3">
+        <label>Employer Deposit</label>
+        <div class="input-group">
+          <input class="form-control" placeholder="3.20">
+          <div class="input-group-append">
+            <span class="input-group-text">%</span>
+          </div>
+        </div>
+        <small class="form-text text-muted">What percent of your income does your employer deposit towards your retirement?</small>
+      </div>
     </div>
-    <div class="form-group">
-      <label for="surveySocialSecurityReceived">Do you receive social security benefits?</label>
-      <select class="form-control" id="surveySocialSecurityReceived">
-        <option>Yes</option>
-        <option>No</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label for="surveyEmployerSalaryDeposit">Approximate percent of your salary that your employer deposits (if appropriate)?</label>
-      <input class="form-control" id="surveyEmployerSalaryDeposit">
-    </div>
-    <div class="form-group">
-      <label for="surveyRetirementConcern">Concerns that you might not live to start retirement?</label>
-      <select class="form-control" id="surveyRetirementConcern">
-        <option>Yes</option>
-        <option>No</option>
-      </select>
-    </div>
-    <button type="submit" class="btn btn-primary mt-3">
+
+    <button type="submit" class="btn btn-primary">
       Submit
     </button>
   </form>
