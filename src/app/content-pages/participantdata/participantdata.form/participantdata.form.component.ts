@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { FormControl, FormGroup } from '@angular/forms';
 import { SignupService } from 'src/app/services/signup.service';
 import { IParticipant } from 'src/app/models/IParticipant';
@@ -12,7 +13,10 @@ export class ParticipantdataFormComponent {
 
   participantData: IParticipant;
 
-  constructor(private signupService: SignupService) {
+  constructor(
+    private router: Router,
+    private signupService: SignupService
+  ) {
       this.participantData =  {
         participant_fname: "",
         participant_initial: "",
@@ -42,8 +46,16 @@ export class ParticipantdataFormComponent {
     marital: new FormControl(),
   });
 
+  onFormSubmitClick(): void {
+    if (this.validateFormContents()) {
+      this.commitFormContents();
+      if (this.submitFormContents()) {
+        this.navigateNext();
+      }
+    }  
+  }
+
   validateFormContents(): boolean {
-    console.log(this.form.value);
     return true; // todo
   }
 
@@ -61,11 +73,13 @@ export class ParticipantdataFormComponent {
     this.participantData.participant_marital = this.form.get('marital').value;
   }
 
-  logFormContents() {
-    if (this.validateFormContents()) {
-      this.commitFormContents();
-      this.signupService.postParticipantData(this.participantData);
-    }  
+  submitFormContents() : boolean {
+    this.signupService.postParticipantData(this.participantData);
+    return true; // todo
+  }
+
+  navigateNext() : void {
+    this.router.navigate(['/survey']);
   }
 
   initializeFormContents() {
