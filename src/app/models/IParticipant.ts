@@ -1,7 +1,4 @@
 export interface IParticipant {
-  participant_fname: string;
-  participant_initial: string;
-  participant_lname: string;
   participant_addr_1: string;
   participant_addr_2: string;
   participant_addr_city: string;

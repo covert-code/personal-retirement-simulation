@@ -1,23 +1,6 @@
 <div class="container my-4">
-  <h1 class="display-4">User Information</h1>
-  <form [formGroup]="participantDataForm" class="mt-4">
-    <div class="form-group">
-      <div class="form-row">
-        <div class="col-md-5 mb-3">
-          <label>First name</label>
-          <input formControlName="firstName" class="form-control" placeholder="Jane">
-        </div>
-        <div class="col-md-2 mb-3">
-          <label>Initial</label>
-          <input formControlName="initial" class="form-control" placeholder="F">
-        </div>
-        <div class="col-md-5 mb-3">
-          <label>Last Name</label>
-          <input formControlName="lastName" class="form-control" placeholder="Doe">
-        </div>
-      </div>
-    </div>
-
+  <h1 class="display-4 mb-4">User Information</h1>
+  <form [formGroup]="participantDataForm">
     <div class="form-group">
       <label>Address</label>
       <input formControlName="address1" class="form-control col-md-12 mb-2">

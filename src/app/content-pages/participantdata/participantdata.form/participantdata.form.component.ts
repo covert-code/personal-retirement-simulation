@@ -18,9 +18,6 @@ export class ParticipantdataFormComponent {
     private signupService: SignupService
   ) {
       this.participantData =  {
-        participant_fname: null,
-        participant_initial: null,
-        participant_lname: null,
         participant_addr_1: null,
         participant_addr_2: null,
         participant_addr_city: null,
@@ -33,9 +30,6 @@ export class ParticipantdataFormComponent {
   }
 
   participantDataForm = new FormGroup({
-    firstName: new FormControl(),
-    initial: new FormControl(),
-    lastName: new FormControl(),
     address1: new FormControl(),
     address2: new FormControl(),
     addressCity: new FormControl(),
@@ -61,9 +55,6 @@ export class ParticipantdataFormComponent {
   }
 
   commitFormContents(): void {
-    this.participantData.participant_fname = this.participantDataForm.get('firstName').value;
-    this.participantData.participant_initial = this.participantDataForm.get('initial').value;
-    this.participantData.participant_lname = this.participantDataForm.get('lastName').value;
     this.participantData.participant_addr_1 = this.participantDataForm.get('address1').value;
     this.participantData.participant_addr_2 = this.participantDataForm.get('address2').value;
     this.participantData.participant_addr_city = this.participantDataForm.get('addressCity').value;
