@@ -32,7 +32,7 @@ export class ParticipantdataFormComponent {
     };
   }
 
-  form = new FormGroup({
+  participantDataForm = new FormGroup({
     firstName: new FormControl(),
     initial: new FormControl(),
     lastName: new FormControl(),
@@ -60,17 +60,17 @@ export class ParticipantdataFormComponent {
   }
 
   commitFormContents(): void {
-    this.participantData.participant_fname = this.form.get('firstName').value;
-    this.participantData.participant_initial = this.form.get('initial').value;
-    this.participantData.participant_lname = this.form.get('lastName').value;
-    this.participantData.participant_addr_1 = this.form.get('address1').value;
-    this.participantData.participant_addr_2 = this.form.get('address2').value;
-    this.participantData.participant_addr_city = this.form.get('addressCity').value;
-    this.participantData.participant_addr_state = this.form.get('addressState').value;
-    this.participantData.participant_addr_zip = this.form.get('addressZip').value;
-    this.participantData.participant_birthdate = this.form.get('birthday').value;
-    this.participantData.participant_income = this.form.get('income').value;
-    this.participantData.participant_marital = this.form.get('marital').value;
+    this.participantData.participant_fname = this.participantDataForm.get('firstName').value;
+    this.participantData.participant_initial = this.participantDataForm.get('initial').value;
+    this.participantData.participant_lname = this.participantDataForm.get('lastName').value;
+    this.participantData.participant_addr_1 = this.participantDataForm.get('address1').value;
+    this.participantData.participant_addr_2 = this.participantDataForm.get('address2').value;
+    this.participantData.participant_addr_city = this.participantDataForm.get('addressCity').value;
+    this.participantData.participant_addr_state = this.participantDataForm.get('addressState').value;
+    this.participantData.participant_addr_zip = this.participantDataForm.get('addressZip').value;
+    this.participantData.participant_birthdate = this.participantDataForm.get('birthday').value;
+    this.participantData.participant_income = this.participantDataForm.get('income').value;
+    this.participantData.participant_marital = this.participantDataForm.get('marital').value;
   }
 
   submitFormContents() : boolean {
