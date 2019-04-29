@@ -18,8 +18,10 @@ import { IndexCardsComponent } from './content-pages/index/index.cards/index.car
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SurveyFormComponent } from './content-pages/survey/survey.form/survey.form.component';
 import { ParticipantdataFormComponent } from './content-pages/participantdata/participantdata.form/participantdata.form.component';
+import { CreateUserFormComponent } from './content-pages/createuser/createuser.form/createuser.form.component';
 // Services
 import { SignupService } from './services/signup.service';
+import { UserAuthService } from './services/userauth.service';
 
 @NgModule({
   declarations: [
@@ -31,6 +33,7 @@ import { SignupService } from './services/signup.service';
     IndexComponent,
     IndexJumbotronComponent,
     IndexCardsComponent,
+    CreateUserFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,7 +44,8 @@ import { SignupService } from './services/signup.service';
     ReactiveFormsModule,
   ],
   providers: [
-    SignupService
+    SignupService,
+    UserAuthService,
   ],
   bootstrap: [
     AppComponent,
