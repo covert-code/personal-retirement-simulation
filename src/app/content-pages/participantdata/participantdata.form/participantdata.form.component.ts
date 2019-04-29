@@ -18,17 +18,17 @@ export class ParticipantdataFormComponent {
     private signupService: SignupService
   ) {
       this.participantData =  {
-        participant_fname: "",
-        participant_initial: "",
-        participant_lname: "",
-        participant_addr_1: "",
-        participant_addr_2: "",
-        participant_addr_city: "",
-        participant_addr_state: "",
-        participant_addr_zip: "",
-        participant_birthdate: "",
-        participant_income: 0,
-        participant_marital: "",
+        participant_fname: null,
+        participant_initial: null,
+        participant_lname: null,
+        participant_addr_1: null,
+        participant_addr_2: null,
+        participant_addr_city: null,
+        participant_addr_state: null,
+        participant_addr_zip: null,
+        participant_birthdate: null,
+        participant_income: null,
+        participant_marital: null,
     };
   }
 
@@ -46,6 +46,7 @@ export class ParticipantdataFormComponent {
     marital: new FormControl(),
   });
 
+  // Main function when submit button is pushed
   onFormSubmitClick(): void {
     if (this.validateFormContents()) {
       this.commitFormContents();
