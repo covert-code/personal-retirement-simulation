@@ -1,6 +1,6 @@
 <div class="container my-4">
   <h1 class="display-4">User Information</h1>
-  <form [formGroup]="form" class="needs-validation mt-4">
+  <form [formGroup]="form" class="mt-4">
     <div class="form-group">
       <div class="form-row">
         <div class="col-md-5 mb-3">
@@ -48,24 +48,24 @@
           <label>Income</label>
           <div class="input-group">
             <div class="input-group-prepend">
-              <span class="input-group-text" id="inputGroupPrepend">$</span>
+              <span class="input-group-text">$</span>
             </div>
             <input formControlName="income" class="form-control">
           </div>
         </div>
         <div class="col-md-3 mb-3">
           <label>Marital</label>
-          <select formControlName="marital" class="custom-select">
-            <option value="Single">Single</option>
-            <option value="Married">Married</option>
-            <option value="Divorced">Divorced</option>
-            <option value="Other">Other</option>
+          <select formControlName="marital" class="form-control">
+            <option>Single</option>
+            <option>Married</option>
+            <option>Divorced</option>
+            <option>Other</option>
           </select>
         </div>
       </div>
     </div>
     
-    <button (click)="submitFormContents()" type="submit" class="btn btn-primary mt-3">
+    <button (click)="submitFormContents()" type="submit" class="btn btn-primary">
       Submit
     </button>
   </form>
