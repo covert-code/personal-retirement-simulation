@@ -60,7 +60,7 @@ export class SurveyFormComponent {
   }
 
   submitFormContents() : boolean {
-    this.signupService.postParticipantSurveyData(this.surveyData);
+    this.signupService.postParticipantSurveyData(this.surveyData).subscribe();
     return true; // todo
   }
 

@@ -66,7 +66,7 @@ export class ParticipantdataFormComponent {
   }
 
   submitFormContents() : boolean {
-    this.signupService.postParticipantData(this.participantData);
+    this.signupService.postParticipantData(this.participantData).subscribe();
     return true; // todo
   }
 
