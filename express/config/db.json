@@ -1,6 +1,7 @@
 {
-	"db_port":3308,
-	"db_name":"retirement_simulation_study",
-	"db_user":"test",
-	"db_pw":"test0!AA",
+  "host":"localhost",
+	"port":3306,
+	"db":"retirement_simulation_study",
+	"user":"test_server",
+	"pw":"secret"
 }
