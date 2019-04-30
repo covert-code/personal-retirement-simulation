@@ -1,3 +1,3 @@
 set DEBUG=express:*
-node server.js
+node express/server.js
 pause
