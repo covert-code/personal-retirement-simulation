@@ -1,4 +1,3 @@
-var mysql = require('mysql');
 var dbc = require('../modules/db-connect');
 
 module.exports = ((app) => {
@@ -18,7 +17,7 @@ module.exports = ((app) => {
       }
     );
 
-    con.end();
+    dbc.close(con);
   })
 
   app.post('/postCreateUser', (req, res) => {
