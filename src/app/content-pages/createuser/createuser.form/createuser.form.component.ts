@@ -57,7 +57,7 @@ export class CreateUserFormComponent {
   }
 
   submitFormContents() : boolean {
-    this.signupService.postCreateUser(this.newUser);
+    this.signupService.postCreateUser(this.newUser).subscribe();
     return true; // todo
   }
 
