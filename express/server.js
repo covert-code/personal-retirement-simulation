@@ -16,44 +16,16 @@ const port = config.express_port;
 ------------------
 Middleware imports for Express application
 */
-
-// BodyParser
-var bodyParser = require('body-parser');
-app.use(bodyParser.json());
-
-// Cross-Origin Resource Sharing
-const cors = require('cors');
-var corsOptions = {
-	origin: true,
-	optionsSuccessStatus: 200
-}
-app.use(cors(corsOptions));
-
+require('./middleware/body-parser-json.js')(app)
+require('./middleware/cors-enable.js')(app)
 
 /* Endpoints
 ------------------
 Specifications for API Endpoints for this server
 */
 
-app.get('/', (req, res) => {
-	res.send('Server Running')
-})
-
-app.post('/postCreateUser', (req, res) => {
-    // write to db
-    res.status(204).end();
-})
-
-app.post('/postParticipantData', (req, res) => {
-    // write to db
-    res.status(204).end();
-})
-
-app.post('/postParticipantSurveyData', (req, res) => {
-    // write to db
-    res.status(204).end();
-})
-
+require('./routes/routes-base.js')(app)
+require('./routes/routes-user-creation.js')(app)
 
 /* Execute
 ------------------
