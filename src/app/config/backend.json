@@ -1,0 +1,8 @@
+{
+  "url":"http://localhost:3000",
+  "endpoints": {
+    "newuser":"/postCreateUser",
+    "newuserbio":"/postParticipantData",
+    "newusersurvey":"/postParticipantSurveyData",
+  }
+}
