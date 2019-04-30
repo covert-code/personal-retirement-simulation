@@ -61,5 +61,5 @@ Server application launch point
 */
 
 app.listen(port, () => console.log(
-	`Personal Retirement Simulation express server listening on port ${port}!`
+	'PRS Backend running at port ${port}.'
 ))
