@@ -25,20 +25,17 @@ app.get('/', (req, res) => {
 
 app.post('/postCreateUser', (req, res) => {
     // write to db
-    req.body = res.body;
-    res.send('OK'); // post 200
+    res.end();
 })
 
 app.post('/postParticipantData', (req, res) => {
     // write to db
-    req.body = res.body;
-    res.send('OK'); // post 200
+    res.end();
 })
 
 app.post('/postParticipantSurveyData', (req, res) => {
     // write to db
-    req.body = res.body;
-    res.send('OK'); // post 200
+    res.end();
 })
 
 // Execute
