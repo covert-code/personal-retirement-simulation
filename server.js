@@ -23,6 +23,12 @@ app.get('/', (req, res) => {
 	res.send('Hello World')
 })
 
+app.post('/postCreateUser', (req, res) => {
+    // write to db
+    req.body = res.body;
+    res.send('OK'); // post 200
+})
+
 app.post('/postParticipantData', (req, res) => {
     // write to db
     req.body = res.body;

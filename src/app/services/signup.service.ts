@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 // Models
 import { IParticipant } from 'src/app/models/IParticipant';
 import { IParticipantSurvey } from 'src/app/models/IParticipantSurvey';
+import { IUser } from 'src/app/models/IUser';
 
 /*
 SignupService
@@ -19,6 +20,14 @@ for pages involved in the creation of new user accounts and initial survey detai
 export class SignupService {
 
   constructor(private http: HttpClient) { }
+
+  /* createuser.form */
+  postCreateUser(data: IUser): Observable<IUser> {
+    return this.http.post<IUser>(
+      'http://localhost:3000/postCreateUser',
+      data
+    );
+  }
 
   /* participantdata.form */
   postParticipantData(data: IParticipant): Observable<IParticipant> {
