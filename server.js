@@ -20,7 +20,7 @@ app.use(cors(corsOptions))
 
 // Endpoints
 app.get('/', (req, res) => {
-	res.send('Hello World')
+	res.send('Server Running')
 })
 
 app.post('/postCreateUser', (req, res) => {
