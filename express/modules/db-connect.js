@@ -35,7 +35,7 @@ module.exports = {
         res_func(results, fields);
       }
     );
-  };
+  },
 
   close: (connection) => {
     con.end();
