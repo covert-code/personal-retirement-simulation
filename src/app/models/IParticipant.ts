@@ -1,3 +1,7 @@
+/* IParticipant
+JSON Interface Model for responses from participantdata
+*/
+
 export interface IParticipant {
   participant_addr_1: string;
   participant_addr_2: string;

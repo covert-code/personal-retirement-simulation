@@ -1,3 +1,7 @@
+/* IParticipantSurvey
+JSON Interface model for responses from retirement survey.
+*/
+
 export interface IParticipantSurvey {
   participant_ret_age: number;
   participant_ret_goal: number;
