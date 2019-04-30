@@ -20,6 +20,7 @@ export class CreateUserFormComponent {
       this.newUser =  {
         user_email: null,
         user_password: null,
+        user_title: null,
         user_fname: null,
         user_initial: null,
         user_lname: null
@@ -27,6 +28,7 @@ export class CreateUserFormComponent {
   }
 
   newUserForm = new FormGroup({
+    title: new FormControl(),
     firstName: new FormControl(),
     initial: new FormControl(),
     lastName: new FormControl(),
@@ -51,6 +53,7 @@ export class CreateUserFormComponent {
   commitFormContents(): void {
     this.newUser.user_email = this.newUserForm.get('email').value;
     this.newUser.user_password = this.newUserForm.get('password').value;
+    this.newUser.user_title = this.newUserForm.get('title').value;
     this.newUser.user_fname = this.newUserForm.get('firstName').value;
     this.newUser.user_initial = this.newUserForm.get('initial').value;
     this.newUser.user_lname = this.newUserForm.get('lastName').value;
