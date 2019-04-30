@@ -1,0 +1,19 @@
+{
+  "name": "prs-backend-express",
+  "version": "1.0.0",
+  "description": "Backend for Personal Retirement Simulation Angular webapp",
+  "main": "server.js",
+  "scripts": {
+    "test": "set DEBUG=express:* & node server.js",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "express"
+  ],
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.16.4"
+  }
+}
