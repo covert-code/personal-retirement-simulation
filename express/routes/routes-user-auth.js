@@ -19,12 +19,12 @@ module.exports = ((app) => {
     }
 
     // Request Body Logic
-    dbc.stored(con, 'exists_user', ['jane.doe@gmail.com'],
+    dbc.stored(con, 'exists_user', [email],
       (results, fields) => {
         if (results[0][0][fields[0][0].name] == 0) {
-          res.json({'user_email': email, 'exists': true});
-        } else {
           res.json({'user_email': email, 'exists': false});
+        } else {
+          res.json({'user_email': email, 'exists': true});
         }
       }
     );
