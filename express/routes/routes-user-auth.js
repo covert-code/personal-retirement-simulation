@@ -44,14 +44,14 @@ module.exports = ((app) => {
     // Request Body Logic
     dbc.stored(
       con, 'create_user',
-      [[
+      [
         req.body.user_email,
         req.body.user_password,
         req.body.user_title,
         req.body.user_fname,
         req.body.user_initial,
         req.body.user_lname
-      ]],
+      ],
       (results, fields) => {
         console.log(results);
         res.json({'success': true});
