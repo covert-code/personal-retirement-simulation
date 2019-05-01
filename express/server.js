@@ -25,7 +25,8 @@ Specifications for API Endpoints for this server
 */
 
 require('./routes/routes-base.js')(app)
-require('./routes/routes-user-creation.js')(app)
+require('./routes/routes-user-auth.js')(app)
+require('./routes/routes-surveys.js')(app)
 
 /* Execute
 ------------------

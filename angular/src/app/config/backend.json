@@ -1,8 +1,23 @@
 {
   "url":"http://localhost:3000",
   "endpoints": {
-    "newuser":"/postCreateUser",
-    "newuserbio":"/postParticipantData",
-    "newusersurvey":"/postParticipantSurveyData",
-  }
+    "user_auth": {
+      "login":        "/api/auth/login",
+      "unavailable":  "/api/auth/register/taken",
+      "create_user":  "/api/auth/register/new",
+    },
+
+    "surveys": {
+      "user_info_survey":       "/api/surveys/info",
+      "user_retirement_survey": "/api/surveys/retirement",
+    },
+
+    "simulation": {
+
+    },
+
+    "admin": {
+
+    },
+  },
 }
