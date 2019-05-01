@@ -22,5 +22,4 @@ export interface IUserRegistrationQuery {
 
 export interface IUserAuthResponse {
   success: boolean,
-  token: string,
 }

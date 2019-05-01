@@ -40,7 +40,6 @@ export class UserAuthService {
     ).pipe(
       map<IUserAuthResponse, boolean>(
         (reply: IUserAuthResponse) => {
-          // todo handle token
           return reply.success;
         }
       )
