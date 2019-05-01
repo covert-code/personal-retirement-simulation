@@ -34,7 +34,31 @@ module.exports = ((app) => {
   });
 
   app.post('/api/auth/register/new', (req, res) => {
-    // write to db
-    res.status(204).end();
+    // Attempt DB Connection
+    var con = dbc.open();
+    if (con == null) {
+      res.status(500).end('Database connection failed.');
+      return;
+    }
+
+    // Request Body Logic
+    dbc.stored(
+      con, 'create_user',
+      [[
+        req.body.user_email,
+        req.body.user_password,
+        req.body.user_title,
+        req.body.user_fname,
+        req.body.user_initial,
+        req.body.user_lname
+      ]],
+      (results, fields) => {
+        console.log(results);
+        res.json({'success': true});
+      }
+    );
+
+    // Terminus
+    dbc.close(con);
   });
 });
