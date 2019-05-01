@@ -38,6 +38,6 @@ module.exports = {
   },
 
   close: (connection) => {
-    con.end();
+    connection.end();
   }
 }

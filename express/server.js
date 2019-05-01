@@ -16,8 +16,8 @@ const port = config.express_port;
 ------------------
 Middleware imports for Express application
 */
-require('./middleware/body-parser-json.js')(app)
 require('./middleware/cors-enable.js')(app)
+require('./middleware/body-parser-json.js')(app)
 
 /* Endpoints
 ------------------

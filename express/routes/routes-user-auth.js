@@ -31,7 +31,6 @@ module.exports = ((app) => {
 
     // Terminus
     dbc.close(con);
-    res.status(204).end();
   });
 
   app.post('/api/auth/register/new', (req, res) => {
