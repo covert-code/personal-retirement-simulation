@@ -6,7 +6,7 @@
           <h3 class="card-title text-center mb-3">Create Account</h3>
           <div class="container my-2 px-0">
             <div class="form-row mb-2 px-0">
-              <div class="col-sm-3 col-md-2 mb-2 px-1">
+              <div class="form-group col-sm-3 col-md-2 mb-2 px-1">
                 <label>Title</label>
                 <select formControlName="title" class="custom-select">
                   <option></option>
@@ -17,30 +17,27 @@
                   <option>Mx</option>
                 </select>
               </div>
-              <div class="col-sm-9 col-md-4 mb-2 px-1">
+              <div class="form-group col-sm-9 col-md-4 mb-2 px-1">
                 <label>First name</label>
                 <input formControlName="firstName" class="form-control" placeholder="Jane" required>
               </div>
-              <div class="col-sm-2 col-md-2 mb-2 px-1">
+              <div class="form-group col-sm-2 col-md-2 mb-2 px-1">
                 <label>Initial</label>
                 <input formControlName="initial" class="form-control" placeholder="F">
               </div>
-              <div class="col-sm-10 col-md-4 mb-2 px-1">
+              <div class="form-group col-sm-10 col-md-4 mb-2 px-1">
                 <label>Last Name</label>
                 <input formControlName="lastName" class="form-control" placeholder="Doe">
               </div>
             </div>
-            <div class="form-group mb-3 px-0">
-              <div class="form-row mb-2 px-1">
-                <label>Email</label>
-                <input formControlName="email" class="form-control">
-                <small *ngIf="!newUserFormFlags.emailAvailable" class="text-danger">
-                  This email address is already registered.
-                </small>
-              </div>
+            <div class="form-group form-row mb-2 px-1">
+              <label>Email</label>
+              <input formControlName="email" class="form-control">
+              <small *ngIf="!newUserFormFlags.emailAvailable" class="text-danger">
+                This email address is already registered.
+              </small>
             </div>
-            <div class="form-group mb-3 pa-0">
-              <div class="form-row mb-2 px-1">
+              <div class="form-group form-row mb-2 px-1">
                 <label>Password</label>
                 <input type="password" formControlName="password" class="form-control">
               </div>
@@ -51,7 +48,6 @@
               <small *ngIf="!newUserFormFlags.passwordMatch" class="text-danger">
                 Passwords do not match.
               </small>
-            </div>
           </div>
           <div class="d-flex flex-row-reverse mt-4">
             <button (click)="onFormSubmitClick()" type="submit" class="btn btn-primary align-self-center">
