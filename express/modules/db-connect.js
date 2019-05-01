@@ -25,7 +25,7 @@ module.exports = {
   stored: (connection, stored_proc, params, res_func) => {
     connection.query(
       'CALL ' + stored_proc + '(?);',
-      params,
+      [params],
       (err, results, fields) => {
         if (err) {
           console.error('error executing query: ' + err.stack);
