@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Observable, of, forkJoin } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -15,29 +15,30 @@ import {
   templateUrl: './createuser.form.component.html',
   styleUrls: ['./createuser.form.component.css']
 })
-export class CreateUserFormComponent {
+export class CreateUserFormComponent implements OnInit {
 
-  // Control element for Form
-  newUserForm = new FormGroup({
-    title: new FormControl(''),
-    firstName: new FormControl('', [Validators.required]),
-    initial: new FormControl('', [Validators.minLength(1)]),
-    lastName: new FormControl('', [Validators.required]),
-    email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', [Validators.required, Validators.minLength(6)]),
-    password_conf: new FormControl('', [Validators.required, Validators.minLength(6)])
-  });
-
-  newUserFormFlags = {
-    emailAvailable: true,
-    passwordMatch: true,
-    submissionOK: true,
-  };
+  newUserForm: FormGroup;
 
   constructor(
     private router: Router,
     private authService: UserAuthService
   ) { }
+
+  ngOnInit() {
+    this.newUserForm = new FormGroup({
+      title: new FormControl(''),
+      firstName: new FormControl('', [Validators.required]),
+      initial: new FormControl('', [Validators.minLength(1)]),
+      lastName: new FormControl('', [Validators.required]),
+      email: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', [Validators.required, Validators.minLength(6)]),
+      password_conf: new FormControl('', [Validators.required, Validators.minLength(6)])
+    });
+  }
+
+  onSubmit(): void {
+    console.log("default onsubmit");
+  }
 
   // Main function when submit button is pushed
   onFormSubmitClick(): void {
@@ -58,8 +59,14 @@ export class CreateUserFormComponent {
 
 
   /* Active Form Validation */
+  newUserFormFlags = {
+    emailAvailable: true,
+    passwordMatch: true,
+    submissionOK: true,
+  };
 
   validateFormContents(): Observable<boolean> {
+    // Terminal Validators
     return forkJoin(
       this.validatePasswordMatch(),
       this.validateFormEmailAvailable()
