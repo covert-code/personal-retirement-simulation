@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClientModule } from '@angular/common/http';
+import { NgBootstrapFormValidationModule } from 'ng-bootstrap-form-validation';
 // Routing Module
 import { AppRoutingModule } from './app-routing.module';
 // Main App
@@ -42,6 +43,8 @@ import { UserAuthService } from './services/userauth.service';
     NgbModule.forRoot(),
     FormsModule,
     ReactiveFormsModule,
+    NgBootstrapFormValidationModule.forRoot(),
+    NgBootstrapFormValidationModule,
   ],
   providers: [
     SignupService,
