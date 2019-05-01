@@ -29,4 +29,8 @@ export class LoginFormComponent implements OnInit {
     });
   }
 
+  // Main function when submit button is pushed
+  onFormSubmitClick(): void {
+    
+  }
 }
