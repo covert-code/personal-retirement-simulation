@@ -62,7 +62,6 @@ export class CreateUserFormComponent implements OnInit {
   newUserFormFlags = {
     emailAvailable: true,
     passwordMatch: true,
-    submissionOK: true,
   };
 
   validateFormContents(): Observable<boolean> {
@@ -122,15 +121,7 @@ export class CreateUserFormComponent implements OnInit {
       user_lname: this.newUserForm.get('lastName').value,
     }
 
-    return this.authService.registerCreateUser(userRegistrationQuery)
-    .pipe(
-      map(
-        (success: boolean) => {
-          this.newUserFormFlags.submissionOK;
-          return success;
-        }
-      )
-    )
+    return this.authService.registerCreateUser(userRegistrationQuery);
   }
 
   navigateNext() : void {
