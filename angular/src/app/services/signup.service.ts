@@ -7,6 +7,7 @@ import { IParticipant } from 'src/app/models/IParticipant';
 import { IParticipantSurvey } from 'src/app/models/IParticipantSurvey';
 import { IUser } from 'src/app/models/IUser';
 
+// Config
 import * as backend from 'src/app/config/backend.json';
 
 /*
@@ -23,18 +24,10 @@ export class SignupService {
 
   constructor(private http: HttpClient) { }
 
-  /* createuser.form */
-  postCreateUser(data: IUser): Observable<IUser> {
-    return this.http.post<IUser>(
-      backend.url + backend.endpoints.newuser,
-      data
-    );
-  }
-
   /* participantdata.form */
   postParticipantData(data: IParticipant): Observable<IParticipant> {
     return this.http.post<IParticipant>(
-      backend.url + backend.endpoints.newuserbio,
+      backend.url + backend.endpoints.surveys.user_info_survey,
     	data
     );
   }
@@ -43,7 +36,7 @@ export class SignupService {
   /* survey.form */
   postParticipantSurveyData(data: IParticipantSurvey): Observable<IParticipantSurvey> {
     return this.http.post<IParticipantSurvey>(
-      backend.url + backend.endpoints.newusersurvey,
+      backend.url + backend.endpoints.surveys.user_retirement_survey,
       data
     );
   }

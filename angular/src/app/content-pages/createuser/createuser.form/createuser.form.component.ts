@@ -1,7 +1,11 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup } from '@angular/forms';
-import { SignupService } from 'src/app/services/signup.service';
+import { UserAuthService } from 'src/app/services/userauth.service';
+import {
+  IUserUnavailableQuery,
+  IUserRegistrationQuery,
+} from 'src/app/services/userauth.service.models';
 import { IUser } from 'src/app/models/IUser';
 
 @Component({
@@ -15,7 +19,7 @@ export class CreateUserFormComponent {
 
   constructor(
     private router: Router,
-    private signupService: SignupService
+    private authService: UserAuthService
   ) {
       this.newUser =  {
         user_email: null,
@@ -33,8 +37,13 @@ export class CreateUserFormComponent {
     initial: new FormControl(),
     lastName: new FormControl(),
     email: new FormControl(),
-    password: new FormControl()
+    password: new FormControl(),
+    password_conf: new FormControl()
   });
+
+  newUserFormFlags = {
+    email_unavailable: false,
+  };
 
   // Main function when submit button is pushed
   onFormSubmitClick(): void {
@@ -47,7 +56,21 @@ export class CreateUserFormComponent {
   }
 
   validateFormContents(): boolean {
-    return true; // todo
+    // Check if the email address is alredy registered
+    this.authService.checkAvailable({
+      user_email: this.newUserForm.get('email').value
+    }).subscribe((exists: boolean) => {
+      if (exists) {
+        console.log("Email Not OK");
+        this.newUserFormFlags.email_unavailable = true;
+      }
+      else {
+        console.log("Email OK");
+        this.newUserFormFlags.email_unavailable = false;
+        // todo proceed
+      }
+    });
+    return false; // todo make obs
   }
 
   commitFormContents(): void {
@@ -60,7 +83,7 @@ export class CreateUserFormComponent {
   }
 
   submitFormContents() : boolean {
-    this.signupService.postCreateUser(this.newUser).subscribe();
+    this.authService.registerCreateUser(this.newUser).subscribe();
     return true; // todo
   }
 
