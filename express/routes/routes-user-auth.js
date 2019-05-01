@@ -53,8 +53,11 @@ module.exports = ((app) => {
         req.body.user_lname
       ],
       (results, fields) => {
-        console.log(results);
-        res.json({'success': true});
+        if (results.affectedRows == 1) {
+          res.json({'success': true});
+        } else {
+          res.json({'success': false});
+        }
       }
     );
 
