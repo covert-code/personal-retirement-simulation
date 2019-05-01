@@ -32,12 +32,22 @@ export class CreateUserFormComponent implements OnInit {
       lastName: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required, Validators.minLength(6)]),
-      password_conf: new FormControl('', [Validators.required, Validators.minLength(6)])
+      password_conf: new FormControl('', [Validators.required, Validators.minLength(6)]),
+      password_vis_toggle: new FormControl(false),
     });
   }
 
-  onSubmit(): void {
-    console.log("default onsubmit");
+  // Password Visibility Toggle
+  passwordFieldType: string = 'password';
+  passwordFieldTypeToggleDescriptor: string = 'show';
+  setPasswordFieldType(): void {
+    if (this.newUserForm.get('password_vis_toggle').value) {
+      this.passwordFieldType = 'text';
+      this.passwordFieldTypeToggleDescriptor = 'hide';
+    } else {
+      this.passwordFieldType = 'password';
+      this.passwordFieldTypeToggleDescriptor = 'show';
+    }
   }
 
   // Main function when submit button is pushed
@@ -58,13 +68,16 @@ export class CreateUserFormComponent implements OnInit {
   }
 
 
-  /* Active Form Validation */
+  /* On-Submit Form Validation */
   newUserFormFlags = {
     emailAvailable: true,
     passwordMatch: true,
   };
 
   validateFormContents(): Observable<boolean> {
+    // Explicit Validation
+    if (!this.newUserForm.valid) { return of(false); }
+
     // Terminal Validators
     return forkJoin(
       this.validatePasswordMatch(),
