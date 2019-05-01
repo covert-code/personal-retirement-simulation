@@ -198,13 +198,83 @@ CREATE TABLE `users` (
   `user_password` char(60) NOT NULL COMMENT 'BCrypt has no salt.',
   `user_title` varchar(20) DEFAULT NULL,
   `user_fname` varchar(60) NOT NULL,
-  `user_inital` varchar(1) DEFAULT NULL,
+  `user_initial` varchar(1) DEFAULT NULL,
   `user_lname` varchar(60) NOT NULL,
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `user_email_UNIQUE` (`user_email`),
   UNIQUE KEY `user_uid_UNIQUE` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping routines for database 'retirement_simulation_study'
+--
+/*!50003 DROP PROCEDURE IF EXISTS `create_user` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `create_user`(
+	IN new_user_email varchar(255),
+    IN new_user_password char(60),
+    IN new_user_title varchar(20),
+    IN new_user_fname varchar(60),
+    IN new_user_initial varchar(1),
+    IN new_user_lname varchar(60)
+)
+BEGIN
+insert into retirement_simulation_study.users (
+	user_email,
+    user_password,
+    user_title,
+    user_fname,
+    user_initial,
+    user_lname
+) values (
+	new_user_email,
+	new_user_password,
+	new_user_title,
+	new_user_fname,
+	new_user_initial,
+	new_user_lname
+);
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `exists_user` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `exists_user`(
+	IN test_user_email varchar(255)
+)
+BEGIN
+declare p_user_exists bool;
+set p_user_exists = exists(
+	select * from retirement_simulation_study.users
+    where user_email = test_user_email
+);
+select p_user_exists;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -215,4 +285,4 @@ CREATE TABLE `users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-04-30  3:52:56
+-- Dump completed on 2019-05-01  5:41:13
