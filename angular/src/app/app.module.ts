@@ -20,6 +20,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SurveyFormComponent } from './content-pages/survey/survey.form/survey.form.component';
 import { ParticipantdataFormComponent } from './content-pages/participantdata/participantdata.form/participantdata.form.component';
 import { CreateUserFormComponent } from './content-pages/createuser/createuser.form/createuser.form.component';
+import { LoginFormComponent } from './content-pages/login/login.form/login.form.component';
 // Services
 import { SignupService } from './services/signup.service';
 import { UserAuthService } from './services/userauth.service';
@@ -35,6 +36,7 @@ import { UserAuthService } from './services/userauth.service';
     IndexJumbotronComponent,
     IndexCardsComponent,
     CreateUserFormComponent,
+    LoginFormComponent,
   ],
   imports: [
     BrowserModule,
