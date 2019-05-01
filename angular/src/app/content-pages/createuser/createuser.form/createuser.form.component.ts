@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable, of, forkJoin } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -10,65 +10,47 @@ import {
   IUserRegistrationQuery,
 } from 'src/app/services/userauth.service.models';
 
-import { IUser } from 'src/app/models/IUser';
-
 @Component({
   selector: 'app-createuser.form',
   templateUrl: './createuser.form.component.html',
   styleUrls: ['./createuser.form.component.css']
 })
-export class CreateUserFormComponent implements OnInit {
-
-  // Data model
-  newUser: IUser;
+export class CreateUserFormComponent {
 
   // Control element for Form
   newUserForm = new FormGroup({
-    title: new FormControl(),
-    firstName: new FormControl(),
-    initial: new FormControl(),
-    lastName: new FormControl(),
-    email: new FormControl(),
-    password: new FormControl(),
-    password_conf: new FormControl()
+    title: new FormControl(''),
+    firstName: new FormControl('', [Validators.required]),
+    initial: new FormControl('', [Validators.minLength(1)]),
+    lastName: new FormControl('', [Validators.required]),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required, Validators.minLength(6)]),
+    password_conf: new FormControl('', [Validators.required, Validators.minLength(6)])
   });
 
   newUserFormFlags = {
-    email_available: true,
-    password_match: true,
+    emailAvailable: true,
+    passwordMatch: true,
+    submissionOK: true,
   };
 
   constructor(
     private router: Router,
     private authService: UserAuthService
-  ) {
-    // initialize data model
-    this.newUser =  {
-      user_email: null,
-      user_password: null,
-      user_title: null,
-      user_fname: null,
-      user_initial: null,
-      user_lname: null
-    };
-  }
-
-  ngOnInit() {
-    // initialize form values
-    for (const field in this.newUserForm.controls) {
-      this.newUserForm.get(field).setValue('');
-    }
-  }
+  ) { }
 
   // Main function when submit button is pushed
   onFormSubmitClick(): void {
     this.validateFormContents().subscribe(
-      (form_errors: boolean) => {
-        if (form_errors) {
-          this.commitFormContents();
-          if (this.submitFormContents()) {
-            this.navigateNext();
-          }
+      (formValid: boolean) => {
+        if (formValid) {
+          this.submitFormContents().subscribe(
+            (submissionSuccess: boolean) => {
+              if (submissionSuccess) {
+                this.navigateNext();
+              }
+            }
+          );
         }
       }
     );
@@ -98,39 +80,50 @@ export class CreateUserFormComponent implements OnInit {
     var valid: boolean = password_text == password_conf;
 
     // set and return
-    this.newUserFormFlags.password_match = valid;
+    this.newUserFormFlags.passwordMatch = valid;
     return of(valid);
   }
 
   validateFormEmailAvailable(): Observable<boolean> {
     // Ask auth service if the email address is available
-    return this.authService.checkAvailable({
+    var userUnavailableQuery: IUserUnavailableQuery = {
       user_email: this.newUserForm.get('email').value
-    })
-    .pipe(
-      map((exists: boolean) => {
-        // when we get it, read the boolean to see if available
-        var valid: boolean = !exists
+    }
 
-        // set and return
-        this.newUserFormFlags.email_available = valid;
-        return valid;
-      })
+    return this.authService.checkAvailable(userUnavailableQuery)
+    .pipe(
+      map(
+        (exists: boolean) => {
+          // when we get it, read the boolean to see if available
+          var valid: boolean = !exists
+
+          // set and return
+          this.newUserFormFlags.emailAvailable = valid;
+          return valid;
+        }
+      )
     );
   }
 
-  commitFormContents(): void {
-    this.newUser.user_email = this.newUserForm.get('email').value;
-    this.newUser.user_password = this.newUserForm.get('password').value;
-    this.newUser.user_title = this.newUserForm.get('title').value;
-    this.newUser.user_fname = this.newUserForm.get('firstName').value;
-    this.newUser.user_initial = this.newUserForm.get('initial').value;
-    this.newUser.user_lname = this.newUserForm.get('lastName').value;
-  }
+  submitFormContents() : Observable<boolean> {
+    var userRegistrationQuery : IUserRegistrationQuery = {
+      user_email: this.newUserForm.get('email').value,
+      user_password: this.newUserForm.get('password').value,
+      user_title: this.newUserForm.get('title').value,
+      user_fname: this.newUserForm.get('firstName').value,
+      user_initial: this.newUserForm.get('initial').value,
+      user_lname: this.newUserForm.get('lastName').value,
+    }
 
-  submitFormContents() : boolean {
-    this.authService.registerCreateUser(this.newUser).subscribe();
-    return true; // todo
+    return this.authService.registerCreateUser(userRegistrationQuery)
+    .pipe(
+      map(
+        (success: boolean) => {
+          this.newUserFormFlags.submissionOK;
+          return success;
+        }
+      )
+    )
   }
 
   navigateNext() : void {

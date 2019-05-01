@@ -5,7 +5,6 @@ import { Observable } from 'rxjs';
 // Models
 import { IParticipant } from 'src/app/models/IParticipant';
 import { IParticipantSurvey } from 'src/app/models/IParticipantSurvey';
-import { IUser } from 'src/app/models/IUser';
 
 // Config
 import * as backend from 'src/app/config/backend.json';

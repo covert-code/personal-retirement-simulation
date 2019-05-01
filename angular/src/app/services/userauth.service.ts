@@ -24,19 +24,26 @@ export class UserAuthService {
     return this.http.post<IUserUnavailableResponse>(
       backend.url + backend.endpoints.user_auth.unavailable,
       data
-      ).pipe(
-        map<IUserUnavailableResponse, boolean>(
-          (reply: IUserUnavailableResponse) => {
-            return reply.exists;
-          }
-        )
-      );
+    ).pipe(
+      map<IUserUnavailableResponse, boolean>(
+        (reply: IUserUnavailableResponse) => {
+          return reply.exists;
+        }
+      )
+    );
   }
 
-  registerCreateUser(data: IUserRegistrationQuery): Observable<IUserAuthResponse> {
+  registerCreateUser(data: IUserRegistrationQuery): Observable<boolean> {
     return this.http.post<IUserAuthResponse>(
       backend.url + backend.endpoints.user_auth.create_user,
       data
+    ).pipe(
+      map<IUserAuthResponse, boolean>(
+        (reply: IUserAuthResponse) => {
+          // todo handle token
+          return reply.success;
+        }
+      )
     );
   }
 
