@@ -1,3 +1,4 @@
 {
-	"express_port":3000
+	"http_port":3000,
+  "https_port":3443
 }

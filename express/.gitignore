@@ -1,7 +1,8 @@
+# secret config
+
 # ssl
 *.rnd
-*.cert
-*.key
+*.pem
 
 # dependencies
 /node_modules
