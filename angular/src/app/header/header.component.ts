@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { UserAuthService } from 'src/app/services/userauth.service';
 
 @Component({
   selector: 'app-header',
@@ -8,4 +9,6 @@ import { Component } from '@angular/core';
 export class HeaderComponent {
   // header collapse trigger
 	isHeaderCollapsed = true;
+
+  constructor(authService: UserAuthService) { }
 }
