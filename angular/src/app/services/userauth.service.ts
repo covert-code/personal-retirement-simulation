@@ -68,6 +68,12 @@ export class UserAuthService {
     ).pipe(
       map<protocol.IUserRegistrationResponse, boolean>(
         (reply: protocol.IUserRegistrationResponse) => {
+          if (reply.success) {
+            this.state.setAuthenticated(
+              data.user_email,
+              data.user_password
+            );
+          }
           return reply.success;
         }
       )
