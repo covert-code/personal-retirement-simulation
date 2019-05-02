@@ -128,6 +128,8 @@ export class CreateUserFormComponent implements OnInit {
     );
   }
 
+
+  /* Submit to Server */
   submitFormContents() : Observable<boolean> {
     var userRegistrationQuery : IUserRegistrationQuery = {
       user_email: this.newUserForm.get('email').value,
@@ -141,6 +143,8 @@ export class CreateUserFormComponent implements OnInit {
     return this.authService.registerCreateUser(userRegistrationQuery);
   }
 
+
+  /* Navigation to Next Route */
   navigateNext() : void {
     this.router.navigate(['/about-you']);
   }
