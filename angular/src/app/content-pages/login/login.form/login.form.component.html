@@ -12,6 +12,9 @@
             <label>Password</label>
             <input type="password" formControlName="password" class="form-control">
           </div>
+          <small *ngIf="loginFormFlags.authFail" class="text-danger">
+            Username or password is incorrect.
+          </small>
           <div class="d-flex flex-row-reverse mt-4">
             <button (click)="onFormSubmitClick()" type="submit" class="btn btn-primary align-self-center">
               Login
