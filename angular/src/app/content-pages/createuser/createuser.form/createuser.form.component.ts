@@ -31,8 +31,12 @@ export class CreateUserFormComponent implements OnInit {
       initial: new FormControl('', [Validators.maxLength(1)]),
       lastName: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', [Validators.required, Validators.minLength(6)]),
-      password_conf: new FormControl('', [Validators.required, Validators.minLength(6)]),
+      password: new FormControl('', [
+        Validators.required, Validators.minLength(6), Validators.maxLength(50),
+      ]),
+      password_conf: new FormControl('', [
+        Validators.required, Validators.minLength(6), Validators.maxLength(50),
+      ]),
       password_vis_toggle: new FormControl(false),
     });
   }

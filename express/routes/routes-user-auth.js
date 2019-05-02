@@ -1,5 +1,7 @@
-const dbc = require('../modules/db-connect');
 const config_bcrypt = require('../config/bcrypt.json');
+
+const dbc = require('../modules/db-connect');
+const bcrypt = require('bcrypt');
 
 module.exports = ((app) => {
   /* Endpoint to check the validity of an email/password combination. */
@@ -35,12 +37,19 @@ module.exports = ((app) => {
 
         // if user exists, we need to check:
         var db_pw_hash = db_reply[0].user_password;
-        user_login_response.success = (
-          db_pw_hash == login_data.user_password
-        );
 
-        // reply with JSON
-        res.json(user_login_response);
+        bcrypt.compare(
+          login_data.user_password,
+          db_pw_hash,
+          // Listener for BCrypt comparator result
+          (err, result) => {
+            // set success value
+            user_login_response.success = result;
+
+            // reply with JSON
+            res.json(user_login_response);
+          }
+        );
       }
     );
 
@@ -86,37 +95,49 @@ module.exports = ((app) => {
   app.post('/api/auth/register/new', (req, res) => {
     var user_registration_query = req.body;
 
-    // Attempt DB Connection
-    var con = dbc.open();
-    if (con == null) {
-      res.status(500).end('Database connection failed.');
-      return;
-    }
-
     // Request Body Logic
-    dbc.stored(
-      con, 'user_create',
-      [
-        user_registration_query.user_email,
-        user_registration_query.user_password,
-        user_registration_query.user_title,
-        user_registration_query.user_fname,
-        user_registration_query.user_initial,
-        user_registration_query.user_lname
-      ],
-      (results, fields) => {
-        // JSON reply body
-        var user_registration_response = {};
 
-        // set fields: success
-        user_registration_response.success = (results.affectedRows == 1);
+    // start by bcrypt-hashing the password
+    bcrypt.hash(
+      user_registration_query.user_password,
+      config_bcrypt.rounds,
+      (err, hash) => {
 
-        // reply with JSON
-        res.json(user_registration_response);
+        // Attempt DB Connection
+        var con = dbc.open();
+        if (con == null) {
+          res.status(500).end('Database connection failed.');
+          return;
+        }
+
+        // store in db
+        dbc.stored(
+          con, 'user_create',
+          [
+            user_registration_query.user_email,
+            hash,
+            user_registration_query.user_title,
+            user_registration_query.user_fname,
+            user_registration_query.user_initial,
+            user_registration_query.user_lname
+          ],
+          (results, fields) => {
+            // JSON reply body
+            var user_registration_response = {};
+
+            // set fields: success
+            user_registration_response.success = (results.affectedRows == 1);
+
+            // reply with JSON
+            res.json(user_registration_response);
+          }
+        )
+
+
+        // Inner Terminus
+        dbc.close(con);
       }
     );
-
-    // Terminus
-    dbc.close(con);
+    // Outer Terminus
   });
 });
