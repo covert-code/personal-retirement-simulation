@@ -19,6 +19,38 @@ export class UserAuthService {
 
   constructor(private http: HttpClient) { }
 
+  // Returns whether or not a user is signed in
+  isAuthenticated(): boolean {
+    return this.state.isAuthenticated();
+  }
+
+  // Handles a login request
+  loginUser(data: input.IUserLoginQuery): Observable<boolean> {
+    return this.http.post<protocol.IUserLoginResponse>(
+      backend.url + backend.endpoints.user_auth.login,
+      data // pass directly, query and request formats match
+    ).pipe(
+      map<protocol.IUserLoginResponse, boolean>(
+        (reply: protocol.IUserLoginResponse) => {
+          if (reply.success) {
+            this.state.setAuthenticated(
+              data.user_email,
+              data.user_password
+            );
+          }
+          return reply.success;
+        }
+      )
+    );
+  }
+
+  // Handles a logout request
+  logoutUser(): void {
+    this.state.deauthenticate();
+  }
+
+  /* Registration */
+
   // Checks if a user email is available for taking
   checkAvailable(data: input.IUserUnavailableQuery): Observable<boolean> {
     return this.http.post<protocol.IUserUnavailableResponse>(
@@ -45,30 +77,5 @@ export class UserAuthService {
         }
       )
     );
-  }
-
-  // Handles a login request
-  loginUser(data: input.IUserLoginQuery): Observable<boolean> {
-    return this.http.post<protocol.IUserLoginResponse>(
-      backend.url + backend.endpoints.user_auth.login,
-      data // pass directly, query and request formats match
-    ).pipe(
-      map<protocol.IUserLoginResponse, boolean>(
-        (reply: protocol.IUserLoginResponse) => {
-          if (reply.success) {
-            this.state.setAuthenticated(
-              data.user_email,
-              data.user_password
-            );
-          }
-          return reply.success;
-        }
-      )
-    );
-  }
-
-  // Handles a logout request
-  logoutUser(): void {
-    this.state.deauthenticate();
   }
 }
