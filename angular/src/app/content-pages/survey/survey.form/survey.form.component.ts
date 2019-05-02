@@ -22,4 +22,6 @@ export class SurveyFormComponent {
     currentSavings: new FormControl(),
     employerDeposit: new FormControl()
   });
+
+  onFormSubmitClick(): void { }
 }

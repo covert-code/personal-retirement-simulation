@@ -24,4 +24,6 @@ export class ParticipantdataFormComponent {
     income: new FormControl(),
     marital: new FormControl(),
   });
+
+  onFormSubmitClick(): void { }
 }
