@@ -3,26 +3,25 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgBootstrapFormValidationModule } from 'ng-bootstrap-form-validation';
 // Routing Module
 import { AppRoutingModule } from './app-routing.module';
 // Main App
 import { AppComponent } from './app.component';
+// Services
+import { UserAuthService } from './services/userauth.service';
 // Heder, Footer
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
-// Index Page
+// Content Pages
 import { IndexComponent } from './content-pages/index/index.component';
 import { IndexJumbotronComponent } from './content-pages/index/index.jumbotron/index.jumbotron.component';
 import { IndexCardsComponent } from './content-pages/index/index.cards/index.cards.component';
-// Forms (and Dependencies)
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SurveyFormComponent } from './content-pages/survey/survey.form/survey.form.component';
 import { ParticipantdataFormComponent } from './content-pages/participantdata/participantdata.form/participantdata.form.component';
 import { CreateUserFormComponent } from './content-pages/createuser/createuser.form/createuser.form.component';
 import { LoginFormComponent } from './content-pages/login/login.form/login.form.component';
-// Services
-import { UserAuthService } from './services/userauth.service';
 
 @NgModule({
   declarations: [
