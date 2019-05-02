@@ -1,5 +1,5 @@
-var mysql = require('mysql');
-var db_config = require('../config/db.json');
+const mysql = require('mysql');
+const db_config = require('../config/db.json');
 
 module.exports = {
   open: () => {

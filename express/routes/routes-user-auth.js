@@ -1,4 +1,5 @@
-var dbc = require('../modules/db-connect');
+const dbc = require('../modules/db-connect');
+const config_bcrypt = require('../config/bcrypt.json');
 
 module.exports = ((app) => {
   /* Endpoint to check the validity of an email/password combination. */
@@ -33,7 +34,6 @@ module.exports = ((app) => {
         }
 
         // if user exists, we need to check:
-
         var db_pw_hash = db_reply[0].user_password;
         user_login_response.success = (
           db_pw_hash == login_data.user_password

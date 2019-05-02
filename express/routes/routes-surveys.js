@@ -1,4 +1,4 @@
-var dbc = require('../modules/db-connect');
+const dbc = require('../modules/db-connect');
 
 module.exports = ((app) => {
   
