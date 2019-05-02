@@ -30,6 +30,9 @@ export class LoginFormComponent implements OnInit {
     });
   }
 
+  // Hide/Show password
+  passwordFieldType: string = 'password';
+
   // Main function when submit button is pushed
   onFormSubmitClick(): void {
     this.validateFormContents().subscribe(
