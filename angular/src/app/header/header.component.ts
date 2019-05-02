@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { UserAuthService } from 'src/app/services/userauth.service';
 
 @Component({
@@ -10,5 +11,13 @@ export class HeaderComponent {
   // header collapse trigger
 	isHeaderCollapsed = true;
 
-  constructor(authService: UserAuthService) { }
+  constructor(
+    private router: Router,
+    private authService: UserAuthService
+  ) { }
+
+  logout(): void {
+    this.authService.logoutUser();
+    this.router.navigate(['/']);
+  }
 }
