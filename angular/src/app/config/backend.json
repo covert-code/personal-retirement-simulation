@@ -1,5 +1,5 @@
 {
-  "url":"http://localhost:3000",
+  "url":"http://140.104.237.250:3000",
   "endpoints": {
     "user_auth": {
       "login":        "/api/auth/login",
