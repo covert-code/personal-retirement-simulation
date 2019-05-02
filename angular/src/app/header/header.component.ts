@@ -8,13 +8,18 @@ import { UserAuthService } from 'src/app/services/userauth.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
-  // header collapse trigger
-	isHeaderCollapsed = true;
+	isHeaderCollapsed: boolean = true;
+  authenticated: boolean;
 
   constructor(
     private router: Router,
     private authService: UserAuthService
-  ) { }
+  ) {
+    this.authenticated = this.authService.state.isAuthenticated();
+    this.authService.state.authenticatedStatus.subscribe(
+      (status: boolean) => { this.authenticated = status }
+    );
+  }
 
   logout(): void {
     this.authService.logoutUser();
