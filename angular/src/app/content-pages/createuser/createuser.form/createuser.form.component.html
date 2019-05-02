@@ -32,22 +32,22 @@
           </div>
           <div class="form-group form-row mb-2 px-1">
             <label>Email</label>
-            <input formControlName="email" class="form-control">
+            <input formControlName="email" class="form-control" (keydown)="newUserFormFlags.emailAvailable=true">
             <small *ngIf="!newUserFormFlags.emailAvailable" class="text-danger">
               This email address is already registered.
             </small>
           </div>
           <div class="form-group form-row mb-2 px-1">
             <label>Password</label>
-            <input type="{{passwordFieldType}}" formControlName="password" class="form-control">
+            <input type="{{passwordFieldType}}" formControlName="password" class="form-control" (keydown)="newUserFormFlags.passwordMatch=true">
           </div>
           <div class="form-row mb-2 px-1">
             <label>Confirm Password</label>
-            <input type="{{passwordFieldType}}" formControlName="password_conf" class="form-control">
-          </div>
+            <input type="{{passwordFieldType}}" formControlName="password_conf" class="form-control" (keydown)="newUserFormFlags.passwordMatch=true">
           <small *ngIf="!newUserFormFlags.passwordMatch" class="text-danger">
             Passwords do not match.
           </small>
+          </div>
           </div>
           <div class="form-row mb-2 px-1">
             <div class="form-check">
