@@ -1,4 +1,5 @@
 # secret config
+config/secret.json
 
 # ssl
 *.rnd
