@@ -8,7 +8,7 @@ import { UserAuthService } from 'src/app/services/userauth.service';
 import {
   IUserUnavailableQuery,
   IUserRegistrationQuery,
-} from 'src/app/services/userauth.service.models';
+} from 'src/app/services/userauth.service.models/service-interface';
 
 @Component({
   selector: 'app-createuser.form',

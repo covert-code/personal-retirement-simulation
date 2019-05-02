@@ -7,7 +7,7 @@ import { map } from 'rxjs/operators';
 import { UserAuthService } from 'src/app/services/userauth.service';
 import {
   IUserLoginQuery
-} from 'src/app/services/userauth.service.models';
+} from 'src/app/services/userauth.service.models/service-interface';
 
 @Component({
   selector: 'app-login.form',

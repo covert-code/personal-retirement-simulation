@@ -4,14 +4,9 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 // Models
-import {
-  IUserUnavailableQuery,
-  IUserUnavailableResponse,
-  IUserRegistrationQuery,
-  IUserRegistrationResponse,
-  IUserLoginQuery,
-  IUserLoginResponse,
-} from 'src/app/services/userauth.service.models';
+import * as model from 'src/app/services/userauth.service.models/state';
+import * as input from 'src/app/services/userauth.service.models/service-interface';
+import * as protocol from 'src/app/services/userauth.service.models/protocols';
 
 // Config
 import * as backend from 'src/app/config/backend.json';
@@ -20,41 +15,45 @@ import * as backend from 'src/app/config/backend.json';
   providedIn: 'root'
 })
 export class UserAuthService {
+  state: model.IUserAuthState = new model.IUserAuthState();
+
   constructor(private http: HttpClient) { }
 
-  checkAvailable(data: IUserUnavailableQuery): Observable<boolean> {
-    return this.http.post<IUserUnavailableResponse>(
+  checkAvailable(data: input.IUserUnavailableQuery): Observable<boolean> {
+    var req: protocol.IUserUnavailableRequest
+
+    return this.http.post<protocol.IUserUnavailableResponse>(
       backend.url + backend.endpoints.user_auth.unavailable,
       data
     ).pipe(
-      map<IUserUnavailableResponse, boolean>(
-        (reply: IUserUnavailableResponse) => {
+      map<protocol.IUserUnavailableResponse, boolean>(
+        (reply: protocol.IUserUnavailableResponse) => {
           return reply.exists;
         }
       )
     );
   }
 
-  registerCreateUser(data: IUserRegistrationQuery): Observable<boolean> {
-    return this.http.post<IUserRegistrationResponse>(
+  registerCreateUser(data: input.IUserRegistrationQuery): Observable<boolean> {
+    return this.http.post<protocol.IUserRegistrationResponse>(
       backend.url + backend.endpoints.user_auth.create_user,
       data
     ).pipe(
-      map<IUserRegistrationResponse, boolean>(
-        (reply: IUserRegistrationResponse) => {
+      map<protocol.IUserRegistrationResponse, boolean>(
+        (reply: protocol.IUserRegistrationResponse) => {
           return reply.success;
         }
       )
     );
   }
 
-  loginUser(data: IUserLoginQuery): Observable<boolean> {
-    return this.http.post<IUserLoginResponse>(
+  loginUser(data: input.IUserLoginQuery): Observable<boolean> {
+    return this.http.post<protocol.IUserLoginResponse>(
       backend.url + backend.endpoints.user_auth.login,
       data
     ).pipe(
-      map<IUserLoginResponse, boolean>(
-        (reply: IUserLoginResponse) => {
+      map<protocol.IUserLoginResponse, boolean>(
+        (reply: protocol.IUserLoginResponse) => {
           return reply.success;
         }
       )
