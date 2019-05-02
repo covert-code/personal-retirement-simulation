@@ -13,17 +13,31 @@ module.exports = ((app) => {
     }
 
     // Request Body Logic
-    dbc.stored(con, 'user_login_validate',
+    dbc.stored(con, 'user_get_password',
       [
-        login_data.user_email,
-        login_data.user_password
+        login_data.user_email
       ],
       (results, fields) => {
         // JSON reply body
-        var user_login_response = {};
+        var user_login_response = {}
 
-        // set fields: success
-        user_login_response.success = (results[0][0]['p_login_valid'] == 1);
+        // Get DB record reply
+        var db_reply = results[0];
+        if (db_reply.length == 0) {
+          // user does not exist, as record was not obtained
+          user_login_response.success = false;
+
+          // we can terminate without proceeding with check
+          res.json(user_login_response);
+          reply;
+        }
+
+        // if user exists, we need to check:
+
+        var db_pw_hash = db_reply[0].user_password;
+        user_login_response.success = (
+          db_pw_hash == login_data.user_password
+        );
 
         // reply with JSON
         res.json(user_login_response);
