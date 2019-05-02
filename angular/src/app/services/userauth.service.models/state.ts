@@ -8,10 +8,10 @@ export class UserAuthState {
   private authenticated: boolean = false;
   private credentials: ICredentials = {
     username: null,
-    password: null
+    password: null,
   }
 
-  getAuthenticated(): boolean {
+  isAuthenticated(): boolean {
     return this.authenticated;
   }
 
@@ -21,7 +21,15 @@ export class UserAuthState {
     this.credentials.password = password;
   }
 
-  wrapAuth<T>(request: T): IAuthenticatedRequestBody<T> {
+  authenticateRequest<T>(request: T): IAuthenticatedRequestBody<T> {
+    if (!this.authenticated) {
+      var requestBody: string = JSON.stringify(request);
+      console.error(
+        'Attempted to make an authentication-dependent \
+        request while not authenticated. ${requestBody}'
+      );
+      return null;
+    }
     var authRequest : IAuthenticatedRequestBody<T> = {
       credentials: {
         username: this.credentials.username,
