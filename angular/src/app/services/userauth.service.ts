@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 // Models
-import * as model from 'src/app/services/userauth.service.models/state';
+import { UserAuthState } from 'src/app/services/userauth.service.models/state';
 import * as input from 'src/app/services/userauth.service.models/service-interface';
 import * as protocol from 'src/app/services/userauth.service.models/protocols';
 
@@ -15,16 +15,15 @@ import * as backend from 'src/app/config/backend.json';
   providedIn: 'root'
 })
 export class UserAuthService {
-  state: model.IUserAuthState = new model.IUserAuthState();
+  state: UserAuthState = new UserAuthState();
 
   constructor(private http: HttpClient) { }
 
+  // Checks if a user email is available for taking
   checkAvailable(data: input.IUserUnavailableQuery): Observable<boolean> {
-    var req: protocol.IUserUnavailableRequest
-
     return this.http.post<protocol.IUserUnavailableResponse>(
       backend.url + backend.endpoints.user_auth.unavailable,
-      data
+      data // pass directly, query and request formats match
     ).pipe(
       map<protocol.IUserUnavailableResponse, boolean>(
         (reply: protocol.IUserUnavailableResponse) => {
@@ -34,10 +33,11 @@ export class UserAuthService {
     );
   }
 
+  // Registers a new user
   registerCreateUser(data: input.IUserRegistrationQuery): Observable<boolean> {
     return this.http.post<protocol.IUserRegistrationResponse>(
       backend.url + backend.endpoints.user_auth.create_user,
-      data
+      data // pass directly, query and request formats match
     ).pipe(
       map<protocol.IUserRegistrationResponse, boolean>(
         (reply: protocol.IUserRegistrationResponse) => {
@@ -47,16 +47,28 @@ export class UserAuthService {
     );
   }
 
+  // Handles a login request
   loginUser(data: input.IUserLoginQuery): Observable<boolean> {
     return this.http.post<protocol.IUserLoginResponse>(
       backend.url + backend.endpoints.user_auth.login,
-      data
+      data // pass directly, query and request formats match
     ).pipe(
       map<protocol.IUserLoginResponse, boolean>(
         (reply: protocol.IUserLoginResponse) => {
+          if (reply.success) {
+            this.state.setAuthenticated(
+              data.user_email,
+              data.user_password
+            );
+          }
           return reply.success;
         }
       )
     );
+  }
+
+  // Handles a logout request
+  logoutUser(): void {
+    this.state.deauthenticate();
   }
 }
