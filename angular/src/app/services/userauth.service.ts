@@ -8,7 +8,7 @@ import {
   IUserUnavailableQuery,
   IUserUnavailableResponse,
   IUserRegistrationQuery,
-  IUserAuthResponse,
+  IUserRegistrationResponse,
 } from 'src/app/services/userauth.service.models';
 
 // Config
@@ -34,16 +34,17 @@ export class UserAuthService {
   }
 
   registerCreateUser(data: IUserRegistrationQuery): Observable<boolean> {
-    return this.http.post<IUserAuthResponse>(
+    return this.http.post<IUserRegistrationResponse>(
       backend.url + backend.endpoints.user_auth.create_user,
       data
     ).pipe(
-      map<IUserAuthResponse, boolean>(
-        (reply: IUserAuthResponse) => {
+      map<IUserRegistrationResponse, boolean>(
+        (reply: IUserRegistrationResponse) => {
           return reply.success;
         }
       )
     );
   }
 
+  registerLoginuser(data: IUserLoginQuery)
 }

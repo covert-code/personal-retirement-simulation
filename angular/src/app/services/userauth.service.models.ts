@@ -20,6 +20,15 @@ export interface IUserRegistrationQuery {
   user_lname: string;
 }
 
-export interface IUserAuthResponse {
+export interface IUserRegistrationResponse {
+  success: boolean,
+}
+
+export interface IUserLoginQuery {
+  user_email: string,
+  user_password: string,
+}
+
+export interface IUserLoginResponse {
   success: boolean,
 }
