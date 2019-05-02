@@ -22,7 +22,6 @@ import { ParticipantdataFormComponent } from './content-pages/participantdata/pa
 import { CreateUserFormComponent } from './content-pages/createuser/createuser.form/createuser.form.component';
 import { LoginFormComponent } from './content-pages/login/login.form/login.form.component';
 // Services
-import { SignupService } from './services/signup.service';
 import { UserAuthService } from './services/userauth.service';
 
 @NgModule({
@@ -49,7 +48,6 @@ import { UserAuthService } from './services/userauth.service';
     NgBootstrapFormValidationModule,
   ],
   providers: [
-    SignupService,
     UserAuthService,
   ],
   bootstrap: [
