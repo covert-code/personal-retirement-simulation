@@ -19,11 +19,6 @@ export class UserAuthService {
 
   constructor(private http: HttpClient) { }
 
-  // Returns whether or not a user is signed in
-  isAuthenticated(): boolean {
-    return this.state.isAuthenticated();
-  }
-
   // Handles a login request
   loginUser(data: input.IUserLoginQuery): Observable<boolean> {
     return this.http.post<protocol.IUserLoginResponse>(

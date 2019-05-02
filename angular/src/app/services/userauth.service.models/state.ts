@@ -5,16 +5,12 @@ import { IAuthenticatedRequestBody } from './protocols';
 Global user state model specification
 */
 export class UserAuthState {
-  private authenticated: boolean = false;
+  authenticated: boolean = false;
   private credentials: ICredentials = {
     username: null,
     password: null,
   }
-
-  isAuthenticated(): boolean {
-    return this.authenticated;
-  }
-
+  
   setAuthenticated(username: string, password: string): void {
     this.authenticated = true;
     this.credentials.username = username;
