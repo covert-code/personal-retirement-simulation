@@ -32,7 +32,7 @@ module.exports = ((app) => {
 
           // we can terminate without proceeding with check
           res.json(user_login_response);
-          reply;
+          return;
         }
 
         // if user exists, we need to check:
