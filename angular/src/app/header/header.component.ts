@@ -6,9 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
-	public isHeaderCollapsed = true;
-
-	toggleHeaderCollapse() {
-		this.isHeaderCollapsed = !this.isHeaderCollapsed;
-	}
+  // header collapse trigger
+	isHeaderCollapsed = true;
 }

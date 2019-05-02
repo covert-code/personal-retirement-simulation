@@ -2,7 +2,7 @@
   <nav id="headerNavbar" class="navbar navbar-expand-md navbar-dark bg-dark box-shadow">
     <a class="navbar-brand" href="#">PRS</a>
     <button class="navbar-toggler" type="button"
-      (click)="toggleHeaderCollapse()"
+      (click)="this.isHeaderCollapsed = !this.isHeaderCollapsed"
       [attr.aria-expanded]="!isHeaderCollapsed" aria-controls="collapsibleHeader"
       aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
