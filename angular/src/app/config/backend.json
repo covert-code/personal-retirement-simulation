@@ -1,5 +1,5 @@
 {
-  "url":"https://prs-back.allenjiang.rocks",
+  "url":"https://140.104.237.250:3443",
   "endpoints": {
     "user_auth": {
       "login":        "/api/auth/login",
