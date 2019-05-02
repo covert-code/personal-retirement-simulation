@@ -1,6 +1,6 @@
 // Config Files
-const config = require('./config/server.json');
-const secret = require('./config/secret.json');
+const config = require('../config/server.json');
+const secret = require('../config/secret.json');
 
 // Imports
 const http = require('http');
@@ -13,7 +13,7 @@ const https_options = {
   passphrase: secret.ssl_password
 };
 
-module.exports =  ((app) => {
+module.exports = ((app) => {
   http.createServer(app)
   .listen(
     config.http_port,

@@ -7,7 +7,7 @@
 config/secret.json format: 
 -------------------------------
 {
-  "ssl-password":"your-password-here",
+  "ssl_password":"your-password-here"
 }
 
 -------------------------------
