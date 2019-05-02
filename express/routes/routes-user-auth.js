@@ -1,15 +1,9 @@
 var dbc = require('../modules/db-connect');
 
 module.exports = ((app) => {
-  
+  /* Endpoint to check the validity of an email/password combination. */
   app.post('/api/auth/login', (req, res) => {
-    // write to db
-    res.status(204).end();
-  });
-
-  /* Endpoint to check whether a user exists or not. */
-  app.post('/api/auth/register/taken', (req, res) => {
-    var email = req.body.user_email;
+    var login_data = req.body
 
     // Attempt DB Connection
     var con = dbc.open();
@@ -19,13 +13,20 @@ module.exports = ((app) => {
     }
 
     // Request Body Logic
-    dbc.stored(con, 'exists_user', [email],
+    dbc.stored(con, 'user_login_validate',
+      [
+        login_data.user_email,
+        login_data.user_password
+      ],
       (results, fields) => {
-        if (results[0][0][fields[0][0].name] == 0) {
-          res.json({'user_email': email, 'exists': false});
-        } else {
-          res.json({'user_email': email, 'exists': true});
-        }
+        // JSON reply body
+        var user_login_response = {};
+
+        // set fields: success
+        user_login_response.success = (results[0][0]['p_login_valid'] == 1);
+
+        // reply with JSON
+        res.json(user_login_response);
       }
     );
 
@@ -33,7 +34,44 @@ module.exports = ((app) => {
     dbc.close(con);
   });
 
+  /* Endpoint to check whether a user exists or not. */
+  app.post('/api/auth/register/taken', (req, res) => {
+    var user_unavailable_query = req.body;
+
+    // Attempt DB Connection
+    var con = dbc.open();
+    if (con == null) {
+      res.status(500).end('Database connection failed.');
+      return;
+    }
+
+    // Request Body Logic
+    dbc.stored(con, 'user_exists_validate',
+      [
+        user_unavailable_query.user_email
+      ],
+      (results, fields) => {
+        // JSON reply body
+        var user_unavailable_response = {
+          'user_email': user_unavailable_query.user_email,
+        }
+
+        // set field: exists
+        user_unavailable_query.exists = (results[0][0]['p_user_exists'] == 1);
+
+        // reply with JSON
+        res.json(user_unavailable_query);
+      }
+    );
+
+    // Terminus
+    dbc.close(con);
+  });
+
+  /* Endpoint to register a new user. */
   app.post('/api/auth/register/new', (req, res) => {
+    var user_registration_query = req.body;
+
     // Attempt DB Connection
     var con = dbc.open();
     if (con == null) {
@@ -43,21 +81,24 @@ module.exports = ((app) => {
 
     // Request Body Logic
     dbc.stored(
-      con, 'create_user',
+      con, 'user_create',
       [
-        req.body.user_email,
-        req.body.user_password,
-        req.body.user_title,
-        req.body.user_fname,
-        req.body.user_initial,
-        req.body.user_lname
+        user_registration_query.user_email,
+        user_registration_query.user_password,
+        user_registration_query.user_title,
+        user_registration_query.user_fname,
+        user_registration_query.user_initial,
+        user_registration_query.user_lname
       ],
       (results, fields) => {
-        if (results.affectedRows == 1) {
-          res.json({'success': true});
-        } else {
-          res.json({'success': false});
-        }
+        // JSON reply body
+        var user_registration_response = {};
+
+        // set fields: success
+        user_registration_response.success = (results.affectedRows == 1);
+
+        // reply with JSON
+        res.json(user_registration_response);
       }
     );
 
