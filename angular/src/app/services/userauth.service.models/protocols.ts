@@ -1,5 +1,5 @@
 import * as queries from './service-interface';
-import {  ICredentials } from './state';
+import { ICredentials } from './state';
 
 /*
 Protocols
