@@ -14,11 +14,11 @@ module.exports = {
   },
 
   // Uses the bcrypt.compare function to compare two hashes for equality
-  // Usage: hash_cmp(hash_1, hash_2, (result) => { code_body })
-  hash_cmp: (hash_1, hash_2, next) => {
+  // Usage: hash_cmp(plaintext, hash, (result) => { code_body })
+  hash_cmp: (plaintext, hash, next) => {
     bcrypt.compare(
-      hash_1,
-      hash_2,
+      plaintext,
+      hash,
       (err, result) => {
         if (err)
         next(result);
