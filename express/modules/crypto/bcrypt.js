@@ -2,6 +2,7 @@ const config_bcrypt = require('../../config/bcrypt.json');
 const bcrypt = require('bcrypt');
 
 module.exports = {
+  // Uses the bcrypt.hash function to generate a salted hash according to config
   // Usage: hash_gen(plaintext, (hash) => { code_body })
   hash_gen: (plaintext, next) => {
     bcrypt.hash(
