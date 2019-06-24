@@ -3,26 +3,22 @@ const bcrypt = require('bcrypt');
 
 module.exports = {
   // Uses the bcrypt.hash function to generate a salted hash according to config
-  // Usage: hash_gen(plaintext, (hash) => { code_body })
-  hash_gen: (plaintext, next) => {
-    bcrypt.hash(
+  // Usage: hash_gen(plaintext)
+  // Returns promise of hash
+  hash_gen: (plaintext) => {
+    return bcrypt.hash(
       plaintext,
-      config_bcrypt.rounds,
-      (err, hash) => {
-        next(hash);
-      }
-    )
+      config_bcrypt.rounds
+    ).catch((e) => { console.error(e.message) });
   },
 
   // Uses the bcrypt.compare function to compare two hashes for equality
-  // Usage: hash_cmp(plaintext, hash, (result) => { code_body })
-  hash_cmp: (plaintext, hash, next) => {
-    bcrypt.compare(
+  // Usage: hash_cmp(plaintext, hash)
+  // Returns promise of boolean
+  hash_cmp: (plaintext, hash) => {
+    return bcrypt.compare(
       plaintext,
-      hash,
-      (err, result) => {
-        next(result);
-      }
-    )
-  },
+      hash
+    ).catch((e) => { console.error(e.message) });
+  }
 }
