@@ -21,7 +21,6 @@ module.exports = {
       plaintext,
       hash,
       (err, result) => {
-        if (err)
         next(result);
       }
     )
