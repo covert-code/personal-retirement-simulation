@@ -1,8 +1,3 @@
-const config_bcrypt = require('../config/bcrypt.json');
-
-const dbc = require('../modules/db-connect');
-const bcrypt = require('bcrypt');
-
 module.exports = ((app) => {
   /* Endpoint to check the validity of an email/password combination. */
   app.post('/api/auth/login', (req, res) => {
