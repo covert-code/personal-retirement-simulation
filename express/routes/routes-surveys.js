@@ -11,5 +11,4 @@ module.exports = ((app) => {
     // write to db
     res.status(204).end();
   });
-
 });
