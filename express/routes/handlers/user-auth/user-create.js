@@ -17,12 +17,12 @@ async function user_create_handler(req, res) {
   await auth.hash(env);
 
   // Stored Procedure: user_create
-  var user_create_success = await call_user_create(env);
-
-  // Stored Procedure: auth_login
-  if (user_create_success) {
-    await call_auth_login(env);
-  }
+  await call_user_create(env).then(
+    async () => {
+      // Stored Procedure: auth_login
+      await call_auth_login(env);
+    }, (e) => {} // reject reraised errors
+  );
 
   // Terminate
   common.end_env(env);

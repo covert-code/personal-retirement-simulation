@@ -12,8 +12,6 @@ function call_user_create(env) {
       env.auth.user.password.hash,
       ...env.auth.user.name // unpacking
     ],
-  ).then(
-    (value) => { return true; }
   ).catch(
     // query error handling
     (e) => {
@@ -34,7 +32,7 @@ function call_user_create(env) {
           }
         );
       }
-      return false;
+      return Promise.reject(e); // reraise error for control behavior
     }
   );
 }
