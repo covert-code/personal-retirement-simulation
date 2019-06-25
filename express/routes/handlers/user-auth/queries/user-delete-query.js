@@ -6,8 +6,8 @@ const http = require('../../common/common-http');
 // Sends HTTP on success
 function call_user_delete(env) {
   // Stored Procedure: user_delete
-  return db.call(
-    env, 'user_delete',
+  return db.call(env,
+    'user_delete',
     [
       env.auth.user.user_email,
       env.auth.user.password.hash
