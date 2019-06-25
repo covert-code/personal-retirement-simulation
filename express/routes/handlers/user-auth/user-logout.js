@@ -1,42 +1,6 @@
 const common = require('../common/common');
 const auth = require('../common/common-auth');
-const db = require('../common/common-db');
-const http = require('../common/common-db');
-
-// Calls auth_logout on client credentials in env
-// Returns Promise of resolution
-function call_user_logout(env) {
-  // Stored Procedure: auth_logout
-  db.call(
-    env, 'auth_logout',
-    [
-      env.auth.client.id,
-      env.auth.client.authcode
-    ]
-  ).then(
-    // query success handling
-    (result) => {
-      if (result.affectedRows > 0) {
-        http.ok();
-      } else {
-        http.send(
-          http.status.BAD_REQUEST,
-          {desc: 'Bad or expired client credentials'}
-        );
-      }
-    },
-  ).catch(
-    // query error handling
-    (e) => {
-      http.send(
-        http.status.INTERNAL_SERVER_ERROR,
-        {
-          desc: 'Unable to safely logout client',
-          error: { code: e.code, msg: e.sqlMessage }
-        });
-    }
-  )
-}
+const call_user_logout = require('./user-logout-query');
 
 async function user_logout_handler(req, res) {
   // Initialize
