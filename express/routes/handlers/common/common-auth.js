@@ -50,6 +50,25 @@ function req_read_user_auth(env) {
 }
 module.exports.req_read_user_auth = req_read_user_auth;
 
+/* Name */
+// Set a user's name
+function set_user_name(env, title, first, initial, last) {
+  env.auth.user.name = [title, first, initial, last];
+}
+module.exports.set_user_name = set_user_name;
+
+// Set a user's name from HTTP request body
+function req_read_user_name(env) {
+  var data = http.req_body(env).user;
+  set_user_name(
+    env,
+    data.user_name_title,
+    data.user_name_first,
+    data.user_name_initial,
+    data.user_name_last
+  )
+}
+module.exports.req_read_user_name = req_read_user_name;
 /* Hashing */
 // Generate a hash with a random salt
 async function hash(env) {
