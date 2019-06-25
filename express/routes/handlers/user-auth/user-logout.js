@@ -1,56 +1,56 @@
-const db = require('../../../modules/db/mysql-connect');
-const crypto = require('../../../modules/crypto/bcrypt');
-const http_status = require('http-status-codes');
+const common = require('../common/common');
+const auth = require('../common/common-auth');
+const db = require('../common/common-db');
+const http = require('../common/common-db');
 
-async function user_logout_handler(req, res) {
-  // Credential Structure
-  var user_credentials = {
-    client: {
-      id: req.body.client.id,
-      auth: req.body.client.auth
-    }
-  };
-
-  // Attempt DB Connection
-  var con = null;
-  try { con = await db.open(); }
-  catch (e) {
-    res.status(http_status.INTERNAL_SERVER_ERROR).send(
-      { desc:'Unable to connect to database', error: e }
-    );
-    return;
-  }
-
+// Calls auth_logout on client credentials in env
+// Returns Promise of resolution
+function call_user_logout(env) {
   // Stored Procedure: auth_logout
-  await db.stored(
-    con, 'auth_logout',
+  db.call(
+    env, 'auth_logout',
     [
-      user_credentials.client.id,
-      user_credentials.client.auth
+      env.auth.client.id,
+      env.auth.client.authcode
     ]
   ).then(
     // query success handling
     (result) => {
       if (result.affectedRows > 0) {
-        res.status(http_status.OK).end();
+        http.ok();
       } else {
-        res.status(http_status.BAD_REQUEST);
-        res.send({desc: 'Bad or expired client credentials'});
+        http.send(
+          http.status.BAD_REQUEST,
+          {desc: 'Bad or expired client credentials'}
+        );
       }
     },
   ).catch(
     // query error handling
     (e) => {
-      res.send({
-        desc: 'Unable to safely logout client',
-        error: { code: e.code, msg: e.sqlMessage }
-      });
+      http.send(
+        http.status.INTERNAL_SERVER_ERROR,
+        {
+          desc: 'Unable to safely logout client',
+          error: { code: e.code, msg: e.sqlMessage }
+        });
     }
   )
+}
+
+async function user_logout_handler(req, res) {
+  // Initialize
+  var env = await common.get_env(req, res);
+  if (env == null || !env.active) { return; }
+
+  // Get client credentials from request
+  auth.req_read_client_auth(env);
+
+  // Call logout
+  await call_user_logout(env);
 
   // Terminate
-  db.close(con);
-  if (!res.headersSent) { res.status(http_status.NO_CONTENT).end(); }
+  common.end_env(env);
 }
 
 module.exports.handler = user_logout_handler;
