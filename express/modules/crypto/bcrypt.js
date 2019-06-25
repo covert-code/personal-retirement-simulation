@@ -9,7 +9,10 @@ module.exports = {
     return bcrypt.hash(
       plaintext,
       config_bcrypt.rounds
-    ).catch((e) => { console.error(e.message) });
+    ).catch((e) => {
+      console.error('(/modules/crypto/bcrypt) error generating hash: ' + e.stack);
+      throw e;
+    });
   },
 
   // Uses the bcrypt.compare function to compare two hashes for equality
