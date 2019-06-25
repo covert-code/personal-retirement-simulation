@@ -1,8 +1,6 @@
 module.exports = ((app) => {
   /* Endpoint to check the validity of an email/password combination. */
-  app.post('/api/auth/login', (req, res) => {
-    res.status(204).end();
-  });
+  app.post('/api/auth/login', require('./handlers/user-auth/user-login'));
 
   /* Endpoint to check whether a user exists or not. */
   app.post('/api/auth/register/taken', (req, res) => {

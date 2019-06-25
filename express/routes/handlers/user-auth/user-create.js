@@ -68,7 +68,8 @@ async function user_create_handler(req, res) {
   if (user_create_success) {
     await db.stored(
       con, 'auth_login',
-      [ query_data.user_email,
+      [
+        query_data.user_email,
         query_data.user_password
       ]
     ).then(
