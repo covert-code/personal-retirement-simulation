@@ -1,5 +1,5 @@
-const db = require('../common/common-db');
-const http = require('../common/common-http');
+const db = require('../../common/common-db');
+const http = require('../../common/common-http');
 
 // Calls auth_logout on user_email in env
 // Returns promise of salt
