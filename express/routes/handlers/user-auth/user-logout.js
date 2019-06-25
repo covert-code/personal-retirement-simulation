@@ -1,6 +1,6 @@
 const common = require('../common/common');
 const auth = require('../common/common-auth');
-const call_user_logout = require('./user-logout-query');
+const call_auth_logout = require('./user-logout-query');
 
 async function user_logout_handler(req, res) {
   // Initialize
@@ -11,7 +11,7 @@ async function user_logout_handler(req, res) {
   auth.req_read_client_auth(env);
 
   // Call logout
-  await call_user_logout(env);
+  await call_auth_logout(env);
 
   // Terminate
   common.end_env(env);

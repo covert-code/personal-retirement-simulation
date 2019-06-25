@@ -3,7 +3,8 @@ const http = require('../common/common-http');
 
 // Calls auth_logout on client credentials in env
 // Returns Promise of resolution
-function call_user_logout(env) {
+// Sends HTTP on success
+function call_auth_logout(env) {
   // Stored Procedure: auth_logout
   return db.call(env,
     'auth_logout',
@@ -37,4 +38,4 @@ function call_user_logout(env) {
   );
 }
 
-module.exports = call_user_logout;
+module.exports = call_auth_logout;
