@@ -1,5 +1,3 @@
-var handlers = require('./handlers/user-auth-accounts');
-
 module.exports = ((app) => {
   /* Endpoint to check the validity of an email/password combination. */
   app.post('/api/auth/login', (req, res) => {
@@ -12,5 +10,5 @@ module.exports = ((app) => {
   });
 
   /* Endpoint to register a new user. */
-  app.post('/api/auth/register/new', handlers.user_create);
+  app.post('/api/auth/register/new', require('./handlers/user-auth/user-create'));
 });

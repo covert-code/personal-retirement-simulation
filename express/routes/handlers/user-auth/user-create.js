@@ -1,5 +1,5 @@
-const db = require('../../modules/db/mysql-connect');
-const crypto = require('../../modules/crypto/bcrypt');
+const db = require('../../../modules/db/mysql-connect');
+const crypto = require('../../../modules/crypto/bcrypt');
 const http_status = require('http-status-codes');
 
 async function user_create_handler(req, res) {
@@ -96,4 +96,4 @@ async function user_create_handler(req, res) {
   if (!res.headersSent) { res.status(http_status.NO_CONTENT).end(); }
 }
 
-module.exports.user_create = user_create_handler;
+module.exports = user_create_handler;
