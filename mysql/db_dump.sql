@@ -18,6 +18,20 @@ USE `retirement_simulation_study`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `administrators`
+--
+
+DROP TABLE IF EXISTS `administrators`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `administrators` (
+  `user_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`user_id`),
+  CONSTRAINT `administrators_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Dumping data for table `administrators`
 --
 
@@ -25,6 +39,27 @@ LOCK TABLES `administrators` WRITE;
 /*!40000 ALTER TABLE `administrators` DISABLE KEYS */;
 /*!40000 ALTER TABLE `administrators` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `market_data_historical`
+--
+
+DROP TABLE IF EXISTS `market_data_historical`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `market_data_historical` (
+  `mkt_year` int(10) NOT NULL,
+  `mkt_return_large_cap` double NOT NULL,
+  `mkt_return_small_cap` double NOT NULL,
+  `mkt_return_real_estate` double NOT NULL,
+  `mkt_return_international` double NOT NULL,
+  `mkt_return_bonds` double NOT NULL,
+  `mkt_return_cash` double NOT NULL,
+  `mkt_return_gold` double NOT NULL,
+  `mkt_inflation_rate` double NOT NULL,
+  PRIMARY KEY (`mkt_year`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `market_data_historical`
@@ -79,6 +114,46 @@ DELIMITER ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
+-- Table structure for table `simulation_log`
+--
+
+DROP TABLE IF EXISTS `simulation_log`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `simulation_log` (
+  `log_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `log_timestamp` datetime NOT NULL,
+  `session_id` int(10) unsigned NOT NULL,
+  `log_user_inv_large_cap` double unsigned DEFAULT NULL,
+  `log_user_inv_small_cap` double unsigned DEFAULT NULL,
+  `log_user_inv_real_estate` double unsigned DEFAULT NULL,
+  `log_user_inv_international` double unsigned DEFAULT NULL,
+  `log_user_inv_bonds` double unsigned DEFAULT NULL,
+  `log_user_inv_cash` double unsigned DEFAULT NULL,
+  `log_user_inv_gold` double unsigned DEFAULT NULL,
+  `log_newstate_mkt_year` int(10) NOT NULL,
+  `log_newstate_large_cap` decimal(15,2) unsigned DEFAULT NULL,
+  `log_newstate_small_cap` decimal(15,2) unsigned DEFAULT NULL,
+  `log_newstate_real_estate` decimal(15,2) unsigned DEFAULT NULL,
+  `log_newstate_international` decimal(15,2) unsigned DEFAULT NULL,
+  `log_newstate_bonds` decimal(15,2) unsigned DEFAULT NULL,
+  `log_newstate_cash` decimal(15,2) unsigned DEFAULT NULL,
+  `log_newstate_gold` decimal(15,2) unsigned DEFAULT NULL,
+  `log_newstate_returns` decimal(15,2) GENERATED ALWAYS AS (((((((`log_newstate_large_cap` + `log_newstate_small_cap`) + `log_newstate_real_estate`) + `log_newstate_international`) + `log_newstate_bonds`) + `log_newstate_cash`) + `log_newstate_gold`)) STORED,
+  `log_newstate_deposit_personal` decimal(15,2) unsigned NOT NULL,
+  `log_newstate_deposit_work` decimal(15,2) unsigned NOT NULL,
+  `log_newstate_deposit_salary` decimal(15,2) unsigned NOT NULL,
+  `log_newstate_balance` decimal(15,2) NOT NULL DEFAULT '0.00',
+  `log_newstate_retirement_goal` decimal(15,2) unsigned NOT NULL,
+  PRIMARY KEY (`log_id`),
+  KEY `simulation_log_mkt_year_idx` (`log_newstate_mkt_year`),
+  KEY `simulation_log_session_id_idx` (`session_id`),
+  CONSTRAINT `simulation_log_mkt_year` FOREIGN KEY (`log_newstate_mkt_year`) REFERENCES `market_data_historical` (`mkt_year`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `simulation_log_session_id` FOREIGN KEY (`session_id`) REFERENCES `simulation_sessions` (`session_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Dumping data for table `simulation_log`
 --
 
@@ -86,6 +161,23 @@ LOCK TABLES `simulation_log` WRITE;
 /*!40000 ALTER TABLE `simulation_log` DISABLE KEYS */;
 /*!40000 ALTER TABLE `simulation_log` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `simulation_sessions`
+--
+
+DROP TABLE IF EXISTS `simulation_sessions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `simulation_sessions` (
+  `session_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(10) unsigned NOT NULL,
+  `session_active` bit(1) NOT NULL,
+  PRIMARY KEY (`session_id`),
+  KEY `simulation_sessions_user_id_idx` (`user_id`),
+  CONSTRAINT `simulation_sessions_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `simulation_sessions`
@@ -97,6 +189,26 @@ LOCK TABLES `simulation_sessions` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `simulation_state`
+--
+
+DROP TABLE IF EXISTS `simulation_state`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `simulation_state` (
+  `session_id` int(10) unsigned NOT NULL,
+  `session_year_active_num` int(10) NOT NULL,
+  `session_balance` decimal(15,2) NOT NULL,
+  `session_deposit_personal` decimal(15,2) unsigned NOT NULL,
+  `session_deposit_work` decimal(15,2) unsigned NOT NULL,
+  `session_deposit_salary` decimal(15,2) unsigned NOT NULL,
+  `session_retirement_goal` decimal(15,2) unsigned NOT NULL,
+  PRIMARY KEY (`session_id`),
+  CONSTRAINT `simulation_state_session_id` FOREIGN KEY (`session_id`) REFERENCES `simulation_sessions` (`session_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Dumping data for table `simulation_state`
 --
 
@@ -104,6 +216,24 @@ LOCK TABLES `simulation_state` WRITE;
 /*!40000 ALTER TABLE `simulation_state` DISABLE KEYS */;
 /*!40000 ALTER TABLE `simulation_state` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `simulation_year_history`
+--
+
+DROP TABLE IF EXISTS `simulation_year_history`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `simulation_year_history` (
+  `session_id` int(10) unsigned NOT NULL,
+  `session_year` int(10) NOT NULL,
+  `mkt_year` int(10) NOT NULL,
+  PRIMARY KEY (`session_id`,`session_year`),
+  KEY `simulation_year_history_mkt_year_idx` (`mkt_year`),
+  CONSTRAINT `simulation_year_history_mkt_year` FOREIGN KEY (`mkt_year`) REFERENCES `market_data_historical` (`mkt_year`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `simulation_year_history_session_id` FOREIGN KEY (`session_id`) REFERENCES `simulation_sessions` (`session_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `simulation_year_history`
@@ -115,6 +245,29 @@ LOCK TABLES `simulation_year_history` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `survey_participants`
+--
+
+DROP TABLE IF EXISTS `survey_participants`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `survey_participants` (
+  `user_id` int(10) unsigned NOT NULL,
+  `survey_pd_preseed` bit(1) NOT NULL DEFAULT b'0',
+  `survey_pd_address_1` varchar(255) NOT NULL,
+  `survey_pd_address_2` varchar(255) DEFAULT NULL,
+  `survey_pd_addr_city` varchar(40) NOT NULL,
+  `survey_pd_addr_state` varchar(2) NOT NULL,
+  `survey_pd_addr_zip` varchar(10) NOT NULL,
+  `survey_pd_birthdate` date NOT NULL,
+  `survey_pd_income` decimal(15,2) unsigned NOT NULL,
+  `survey_pd_marital` varchar(45) NOT NULL,
+  PRIMARY KEY (`user_id`),
+  CONSTRAINT `participant_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Dumping data for table `survey_participants`
 --
 
@@ -124,6 +277,27 @@ LOCK TABLES `survey_participants` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `survey_retirement`
+--
+
+DROP TABLE IF EXISTS `survey_retirement`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `survey_retirement` (
+  `user_id` int(10) unsigned NOT NULL,
+  `survey_rt_preseed` bit(1) NOT NULL DEFAULT b'0',
+  `survey_rt_age` int(10) unsigned NOT NULL,
+  `survey_rt_goal` decimal(15,2) unsigned NOT NULL,
+  `survey_rt_curr_savings` decimal(15,2) unsigned NOT NULL,
+  `survey_rt_employer_deposit` double unsigned NOT NULL,
+  `survey_rt_lifetime_concern` bit(1) NOT NULL,
+  `survey_rt_ss` bit(1) NOT NULL,
+  PRIMARY KEY (`user_id`),
+  CONSTRAINT `participant_surveys_user_id` FOREIGN KEY (`user_id`) REFERENCES `survey_participants` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Dumping data for table `survey_retirement`
 --
 
@@ -131,6 +305,21 @@ LOCK TABLES `survey_retirement` WRITE;
 /*!40000 ALTER TABLE `survey_retirement` DISABLE KEYS */;
 /*!40000 ALTER TABLE `survey_retirement` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `table_metadata`
+--
+
+DROP TABLE IF EXISTS `table_metadata`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `table_metadata` (
+  `tb_name` char(45) NOT NULL,
+  `tb_count` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`tb_name`),
+  UNIQUE KEY `table_name_UNIQUE` (`tb_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `table_metadata`
@@ -143,6 +332,25 @@ INSERT INTO `table_metadata` VALUES ('market_data_historical',48),('users',0);
 UNLOCK TABLES;
 
 --
+-- Table structure for table `user_session_tokens`
+--
+
+DROP TABLE IF EXISTS `user_session_tokens`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `user_session_tokens` (
+  `token_client_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(10) unsigned NOT NULL,
+  `token_auth_code` char(40) NOT NULL,
+  `token_time_create` datetime NOT NULL,
+  `token_time_last` datetime NOT NULL,
+  PRIMARY KEY (`token_client_id`),
+  KEY `user_id_idx` (`user_id`),
+  CONSTRAINT `user_session_tokens_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Dumping data for table `user_session_tokens`
 --
 
@@ -150,6 +358,27 @@ LOCK TABLES `user_session_tokens` WRITE;
 /*!40000 ALTER TABLE `user_session_tokens` DISABLE KEYS */;
 /*!40000 ALTER TABLE `user_session_tokens` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `users`
+--
+
+DROP TABLE IF EXISTS `users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `users` (
+  `user_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `user_email` varchar(255) NOT NULL,
+  `user_password` char(60) NOT NULL COMMENT 'BCrypt has no salt.',
+  `user_password_salt` char(29) GENERATED ALWAYS AS (substr(`user_password`,1,29)) STORED,
+  `user_title` varchar(20) DEFAULT NULL,
+  `user_fname` varchar(60) NOT NULL,
+  `user_initial` varchar(1) DEFAULT NULL,
+  `user_lname` varchar(60) NOT NULL,
+  PRIMARY KEY (`user_id`),
+  UNIQUE KEY `user_email_UNIQUE` (`user_email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `users`
@@ -376,8 +605,6 @@ BEGIN
 DECLARE user_id int(10) unsigned;
 SET user_id = auth_user_id(user_email, user_password);
 
-SELECT user_id;
-
 IF (user_id IS NOT NULL)
 THEN
 	INSERT INTO retirement_simulation_study.user_session_tokens
@@ -457,6 +684,30 @@ IF (user_id IS NOT NULL) THEN
 	WHERE user_session_tokens.user_id = user_id
 		AND user_session_tokens.token_client_id IS NOT NULL;
 END IF;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `auth_salt` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `auth_salt`(
+	IN user_email varchar(255)
+)
+BEGIN
+
+SELECT user_password_salt FROM retirement_simulation_study.users
+WHERE users.user_email = user_email;
 
 END ;;
 DELIMITER ;
@@ -1581,4 +1832,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-06-18 14:39:12
+-- Dump completed on 2019-06-25  2:52:15
