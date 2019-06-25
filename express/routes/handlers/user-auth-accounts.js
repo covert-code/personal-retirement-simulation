@@ -38,40 +38,57 @@ async function user_create_handler(req, res) {
   }
 
   // Stored Procedure: user_create
-  var user_create_success = true;
-  var user_create_result = await db.stored(con, 'user_create',
+  var user_create_success = await db.stored(
+    con, 'user_create',
     [
       query_data.user_email,
       query_data.user_password,
       ...query_data.user_name // unpacking
     ],
-  ).catch((e) => {
+  ).then(
+    // query success handling
+    (result) => { return true; },
+  ).catch(
     // query error handling
-    switch (e.code) {
-      case 'ER_DUP_ENTRY':
-        res.status(http_status.BAD_REQUEST).send(
-          { desc:'User already exists', error: { code: e.code, msg: e.sqlMessage } }
-        );
-        break;
-      default:
-        res.status(http_status.INTERNAL_SERVER_ERROR).send(
-          { desc: 'Unable to create new user', error: { code: e.code, msg: e.sqlMessage } }
-        );
-        break;
+    (e) => {
+      var err_desc;
+      if (e.code == 'ER_DUP_ENTRY') {
+        res.status(http_status.BAD_REQUEST);
+        err_desc = 'User already exists';
+      } else {
+        res.status(http_status.INTERNAL_SERVER_ERROR);
+        err_desc = 'Unable to create new user';
+      }
+      res.send({desc: err_desc, error: { code: e.code, msg: e.sqlMessage }});
+      return false;
     }
-    user_create_success = false;
-  });
-  // successful if no errors and we've actually created a row
-  user_create_success = user_create_success
-    && user_create_result && user_create_result.affectedRows == 1;
-
-  // upon success
+  );
+  
+  // Stored Procedure: auth_login
   if (user_create_success) {
-    // attempt login
-    var login_result = await db.stored(con, 'auth_login',
-      [query_data.user_email, query_data.user_password]
-    );
-    console.log(login_result);
+    await db.stored(
+      con, 'auth_login',
+      [ query_data.user_email,
+        query_data.user_password
+      ]
+    ).then(
+      // query success handling
+      (result) => {
+        var select_result = result[1];
+        res.status(http_status.OK).send({
+          token_client_id: select_result.token_client_id,
+          token_auth_code: select_result.token_auth_code
+        })
+      },
+    ).catch(
+      // query error handling
+      (e) => {
+        res.send({
+          desc: err_desc,
+          error: { code: e.code, msg: e.sqlMessage }
+        });
+      }
+    )
   }
 
   // Terminate
