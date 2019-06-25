@@ -16,10 +16,10 @@ module.exports.init_env = async (env) => {
 
 /* Client ID and Authentication */
 // Set a client id/auth pair
-function set_client_auth(env, id, authcode) {
+function set_client_auth(env, id, auth_code) {
   env.auth.client = {
     id: id,
-    authcode: authcode
+    auth_code: auth_code
   }
 }
 module.exports.set_client_auth = set_client_auth;
@@ -27,7 +27,7 @@ module.exports.set_client_auth = set_client_auth;
 // Set a client id/auth pair from HTTP request body
 function req_read_client_auth(env) {
   var data = common_http.req_body(env).client;
-  set_client_auth(env, data.id, data.authcode);
+  set_client_auth(env, data.id, data.auth_code);
 }
 module.exports.req_read_client_auth = req_read_client_auth;
 

@@ -29,7 +29,7 @@ function call_auth_login(env) {
           {
             client: {
               id: select_result.token_client_id,
-              auth: select_result.token_auth_code
+              auth_code: select_result.token_auth_code
             }
           }
         )
