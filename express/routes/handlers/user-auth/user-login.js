@@ -85,8 +85,10 @@ async function user_login_handler(req, res) {
       } else {
         var select_result = result[0][0];
         res.status(http_status.OK).send({
-          token_client_id: select_result.token_client_id,
-          token_auth_code: select_result.token_auth_code
+          client: {
+            id: select_result.token_client_id,
+            auth: select_result.token_auth_code
+          }
         })
       }
     },
