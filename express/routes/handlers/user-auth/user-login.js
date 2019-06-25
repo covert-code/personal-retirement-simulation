@@ -50,7 +50,7 @@ async function user_login_handler(req, res) {
     // query error handling
     (e) => {
       res.send({
-        desc: err_desc,
+        desc: 'Unable to generate login',
         error: { code: e.code, msg: e.sqlMessage }
       });
     }
