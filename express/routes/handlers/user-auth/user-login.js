@@ -2,10 +2,10 @@ const crypto = require('../../../modules/crypto/bcrypt');
 
 const common = require('../common/common');
 const auth = require('../common/common-auth');
-const db = require('../common/common-db');
 const http = require('../common/common-http');
 
 const call_auth_salt = require('./user-salt-query');
+const call_auth_login = require('./user-login-query');
 
 async function user_login_handler(req, res) {
   // Initialize
@@ -37,39 +37,7 @@ async function user_login_handler(req, res) {
 
 
   // Stored Procedure: auth_login
-  await db.call(
-    env, 'auth_login',
-    [
-      env.auth.user.user_email,
-      env.auth.user.password.hash
-    ]
-  ).then(
-    // query success handling
-    (result) => {
-      if (result[0].length == 0) {
-        // query result empty
-        res.status(http.status.BAD_REQUEST);
-        res.send({desc: 'Username or password is incorrect'})
-        return null;
-      } else {
-        var select_result = result[0][0];
-        res.status(http.status.OK).send({
-          client: {
-            id: select_result.token_client_id,
-            auth: select_result.token_auth_code
-          }
-        })
-      }
-    },
-  ).catch(
-    // query error handling
-    (e) => {
-      res.send({
-        desc: 'Unable to generate login',
-        error: { code: e.code, msg: e.sqlMessage }
-      });
-    }
-  )
+  await call_auth_login(env);
 
   // Terminate
   common.end_env(env);
