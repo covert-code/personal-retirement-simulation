@@ -75,7 +75,7 @@ async function user_create_handler(req, res) {
     ).then(
       // query success handling
       (result) => {
-        var select_result = result[1];
+        var select_result = result[0][0];
         res.status(http_status.OK).send({
           token_client_id: select_result.token_client_id,
           token_auth_code: select_result.token_auth_code
