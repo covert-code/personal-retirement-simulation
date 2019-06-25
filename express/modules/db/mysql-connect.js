@@ -2,44 +2,48 @@ const mysql = require('mysql');
 const db_config = require('../../config/db.json');
 
 module.exports = {
-  open: (res) => {
-    var connection = mysql.createConnection({
-      host: db_config.host,
-      port: db_config.port,
-      database: db_config.db,
-      user: db_config.user,
-      password: db_config.pw
-    });
+  open: () => {
+    return new Promise((resolve, reject) => {
+      var connection = mysql.createConnection({
+        host: db_config.host,
+        port: db_config.port,
+        database: db_config.db,
+        user: db_config.user,
+        password: db_config.pw
+      });
 
-    connection.connect(function(err) {
-      if (err) {
-        console.error('error connecting: ' + err.stack);
-        // return db error
-
-        return null;
-      }
-      console.log('connected as id ' + connection.threadId);
-    });
-
-    return connection;
-  },
-
-  stored: (res, connection, stored_proc, params, res_func) => {
-    connection.query(
-      'CALL ' + stored_proc + '(?);',
-      [params],
-      (err, results, fields) => {
+      connection.connect((err) => {
         if (err) {
-          console.error('error executing query: ' + err.stack);
-          return null;
-        }
+          reject(err);
+        };
+        console.log('connected on thread ' + connection.threadId);
+      });
 
-        res_func(results, fields);
-      }
-    );
+      resolve(connection);
+    }).catch((e) => {
+      console.error('(/modules/db/mysql-connect) error connecting: ' + e.stack);
+      throw e;
+    })
   },
 
-  close: (res, connection) => {
+  stored: (connection, stored_proc, params) => {
+    return new Promise((resolve, reject) => {
+      connection.query(
+        'CALL ' + stored_proc + '(?);', [params],
+        (err, rows, fields) => {
+          if (err) {
+            reject(err);
+          };
+          resolve(rows);
+        }
+      )
+    }).catch((e) => {
+      console.error('(/modules/db/mysql-connect) error executing query: ' + e.stack);
+      throw e;
+    })
+  },
+
+  close: (connection) => {
     connection.end();
   }
 }
