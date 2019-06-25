@@ -16,7 +16,7 @@ function call_auth_logout(env) {
     // query success handling
     (result) => {
       if (result.affectedRows > 0) {
-        http.ok();
+        http.ok(env);
       } else {
         http.send(env,
           http.status.BAD_REQUEST,

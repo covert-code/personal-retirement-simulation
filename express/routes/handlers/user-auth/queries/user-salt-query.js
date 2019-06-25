@@ -12,7 +12,7 @@ function call_auth_salt(env) {
     (result) => {
       if (result[0].length == 0) {
         // query result empty
-        http.send(
+        http.send(env,
           http.status.BAD_REQUEST,
           {desc: 'Username or password is incorrect'}
         );
@@ -26,8 +26,8 @@ function call_auth_salt(env) {
   ).catch(
     // query error handling
     (e) => {
-      http.send(
-        http_status.INTERNAL_SERVER_ERROR,
+      http.send(env,
+        http.status.INTERNAL_SERVER_ERROR,
         {
           desc: 'Unable to fetch salt',
           error: { code: e.code, msg: e.sqlMessage }
