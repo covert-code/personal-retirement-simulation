@@ -62,7 +62,8 @@ async function hash_salty(env) {
     return env.auth.user.password.hash;
   }
   catch (e) {
-    res.status(http.status.INTERNAL_SERVER_ERROR).send(
+    http.send(env,
+      http.status.INTERNAL_SERVER_ERROR,
       { desc:'Unable to generate password hash', error: e }
     );
     return null;
