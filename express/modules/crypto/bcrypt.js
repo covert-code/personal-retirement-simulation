@@ -22,6 +22,9 @@ module.exports = {
     return bcrypt.compare(
       plaintext,
       hash
-    ).catch((e) => { console.error(e.message) });
+    ).catch((e) => {
+      console.error('(/modules/crypto/bcrypt) error comparing hash: ' + e.stack);
+      throw e;
+    });
   }
 }
