@@ -34,4 +34,4 @@ async function populate_login(env) {
   if (await auth.hash_salty(env) == null) { common.end_env(env); return; }
 }
 
-module.exports.do_login = populate_login;
+module.exports.populate_login = populate_login;
