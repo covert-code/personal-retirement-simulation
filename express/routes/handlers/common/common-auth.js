@@ -51,6 +51,23 @@ function req_read_user_auth(env) {
 module.exports.req_read_user_auth = req_read_user_auth;
 
 /* Hashing */
+// Generate a hash with a random salt
+async function hash(env) {
+  try {
+    env.auth.user.password.hash = await crypto.hash_gen(
+      env.auth.user.password.plaintext
+    );
+  }
+  catch (e) {
+    http.send(
+      env,
+      http_status.INTERNAL_SERVER_ERROR,
+      { desc:'Unable to generate password hash', error: e }
+    );
+    return;
+  }
+}
+
 // Generate a hash with a known salt
 async function hash_salty(env) {
   // Generate Hash
