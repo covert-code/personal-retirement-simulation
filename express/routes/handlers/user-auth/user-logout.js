@@ -53,4 +53,4 @@ async function user_logout_handler(req, res) {
   if (!res.headersSent) { res.status(http_status.NO_CONTENT).end(); }
 }
 
-module.exports = user_logout_handler;
+module.exports.handler = user_logout_handler;

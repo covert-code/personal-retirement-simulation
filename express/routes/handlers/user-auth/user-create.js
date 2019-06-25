@@ -99,4 +99,4 @@ async function user_create_handler(req, res) {
   if (!res.headersSent) { res.status(http_status.NO_CONTENT).end(); }
 }
 
-module.exports = user_create_handler;
+module.exports.handler = user_create_handler;

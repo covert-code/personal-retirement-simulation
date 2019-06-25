@@ -107,4 +107,4 @@ async function user_login_handler(req, res) {
   if (!res.headersSent) { res.status(http_status.NO_CONTENT).end(); }
 }
 
-module.exports = user_login_handler;
+module.exports.handler = user_login_handler;
