@@ -4,7 +4,7 @@ const http_status = require('http-status-codes');
 
 async function user_create_handler(req, res) {
   // Generate Hash
-  var user_pw_hash = null;  
+  var user_pw_hash = null;
   try { user_pw_hash = await crypto.hash_gen(req.body.user_password) }
   catch (e) {
     res.status(http_status.INTERNAL_SERVER_ERROR).send(
@@ -25,7 +25,7 @@ async function user_create_handler(req, res) {
       req.body.user_name_initial,
       req.body.user_name_last
     ]
-  }
+  };
 
   // Attempt DB Connection
   var con = null;
