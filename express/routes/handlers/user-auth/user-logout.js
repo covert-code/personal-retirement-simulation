@@ -1,5 +1,6 @@
 const common = require('../common/common');
 const auth = require('../common/common-auth');
+
 const call_auth_logout = require('./queries/user-logout-query');
 
 async function user_logout_handler(req, res) {
