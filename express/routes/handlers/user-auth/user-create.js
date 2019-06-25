@@ -54,7 +54,7 @@ async function user_create_handler(req, res) {
       var err_desc;
       if (e.code == 'ER_DUP_ENTRY') {
         res.status(http_status.BAD_REQUEST);
-        err_desc = 'User already exists';
+        err_desc = 'Email is already registered';
       } else {
         res.status(http_status.INTERNAL_SERVER_ERROR);
         err_desc = 'Unable to create new user';
