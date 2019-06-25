@@ -1,8 +1,5 @@
-const crypto = require('../../../modules/crypto/bcrypt');
-
 const common = require('../common/common');
 const auth = require('../common/common-auth');
-const http = require('../common/common-http');
 
 const call_auth_salt = require('./queries/user-salt-query');
 const call_auth_login = require('./queries/user-login-query');
