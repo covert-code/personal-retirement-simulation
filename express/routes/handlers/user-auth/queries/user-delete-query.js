@@ -15,6 +15,8 @@ function call_user_delete(env) {
   ).then(
     // query success handling
     (result) => {
+      if (result == null) { return null; }
+
       if (result.affectedRows > 0) {
         http.ok(env);
       } else {

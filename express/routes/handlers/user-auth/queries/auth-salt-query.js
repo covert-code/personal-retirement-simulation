@@ -11,6 +11,8 @@ function call_auth_salt(env) {
   ).then(
     // query success handling
     (result) => {
+      if (result == null) { return null; }
+      
       if (result[0].length == 0) {
         // query result empty
         http.send(env,

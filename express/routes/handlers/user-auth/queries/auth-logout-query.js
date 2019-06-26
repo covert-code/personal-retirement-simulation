@@ -10,11 +10,13 @@ function call_auth_logout(env) {
     'auth_logout',
     [
       env.auth.client.id,
-      env.auth.client.authcode
+      env.auth.client.auth_code
     ]
   ).then(
     // query success handling
     (result) => {
+      if (result == null) { return null; }
+      
       if (result.affectedRows > 0) {
         http.ok(env);
       } else {

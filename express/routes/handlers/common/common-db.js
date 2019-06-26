@@ -6,13 +6,17 @@ const env_lib = require('./environment.js');
 var prereqs = ['http'];
 
 function env_destroy_db_handler(env) {
-  db.close(env.db.con);
+  if (env.db.active) {
+    env.db.active = false;
+    db.close(env.db.con);
+  }
 }
 
 async function init_db_connection(env) {
   // Attempt DB Connection
   try {
     env.db.con = await db.open();
+    env.db.active = true;
   }
   catch (e) {
     env.http.res
@@ -34,5 +38,9 @@ module.exports.init_env = async (env) => {
 
 /* Database Stored Procedure Call */
 module.exports.call = (env, stored_proc, params) => {
-  return db.stored(env.db.con, stored_proc, params);
+  if (env.db.active) {
+    return db.stored(env.db.con, stored_proc, params);
+  } else {
+    return Promise.resolve(null);
+  }
 }

@@ -15,6 +15,8 @@ function call_user_update_name(env) {
   ).then(
     // query success handling
     (result) => {
+      if (result == null) { return null; }
+
       if (result.affectedRows == 0) {
         http.send(env,
           http.status.BAD_REQUEST,
@@ -23,6 +25,7 @@ function call_user_update_name(env) {
       }
     },
   ).catch(
+    // query failure handling
     (e) => {
       http.send(env,
         http.status.INTERNAL_SERVER_ERROR,
