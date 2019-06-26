@@ -20,7 +20,7 @@ function call_user_delete(env) {
       } else {
         http.send(env,
           http.status.BAD_REQUEST,
-          {desc: 'Unable to delete user'}
+          {desc: 'Username or password is incorrect'}
         );
       }
     },
@@ -30,7 +30,7 @@ function call_user_delete(env) {
       http.send(env,
         http.status.INTERNAL_SERVER_ERROR,
         {
-          desc: 'Unable to generate login',
+          desc: 'Unable to delete user',
           error: { code: e.code, msg: e.sqlMessage }
         }
       );
