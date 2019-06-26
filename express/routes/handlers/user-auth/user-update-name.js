@@ -15,10 +15,10 @@ async function user_update_name_handler(req, res) {
   // Get new user name from request
   auth.req_read_new_user_name(env);
 
-  // Stored Procedure: user_create
+  // Stored Procedure: user_update_name
   await call_user_update_name(env).then(
     async () => {
-      // Stored Procedure: auth_login
+      // Stored Procedure: user_read
       await call_user_read(env);
     }, (e) => {} // reject reraised errors
   );

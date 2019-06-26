@@ -15,10 +15,10 @@ async function user_update_email_handler(req, res) {
   // Get new user email from request
   auth.req_read_new_user_email(env);
 
-  // Stored Procedure: user_create
+  // Stored Procedure: user_update_email
   await call_user_update_email(env).then(
     async () => {
-      // Stored Procedure: auth_login
+      // Stored Procedure: user_read
       await call_user_read(env);
     }, (e) => {} // reject reraised errors
   );
