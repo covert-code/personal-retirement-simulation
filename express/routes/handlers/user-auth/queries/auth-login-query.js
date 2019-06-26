@@ -44,7 +44,7 @@ function call_auth_login(env) {
         http.status.INTERNAL_SERVER_ERROR,
         {
           desc: 'Unable to generate login',
-          error: { code: e.code, msg: e.sqlMessage }
+          error: { code: e.code, msg: e.sqlMessage, stack: e.stack }
         }
       );
     }

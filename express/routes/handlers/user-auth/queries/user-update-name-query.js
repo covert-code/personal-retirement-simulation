@@ -31,7 +31,7 @@ function call_user_update_name(env) {
         http.status.INTERNAL_SERVER_ERROR,
         {
           desc: 'Unable to update name',
-          error: { code: e.code, msg: e.sqlMessage }
+          error: { code: e.code, msg: e.sqlMessage, stack: e.stack }
         }
       );
       return Promise.reject(e); // reraise error for control behavior

@@ -33,7 +33,7 @@ function call_auth_salt(env) {
         http.status.INTERNAL_SERVER_ERROR,
         {
           desc: 'Unable to fetch salt',
-          error: { code: e.code, msg: e.sqlMessage }
+          error: { code: e.code, msg: e.sqlMessage, stack: e.stack }
         }
       );
     }

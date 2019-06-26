@@ -20,7 +20,7 @@ function call_user_create(env) {
           http.status.BAD_REQUEST,
           {
             desc: 'Email is already registered',
-            error: { code: e.code, msg: e.sqlMessage }
+            error: { code: e.code, msg: e.sqlMessage, stack: e.stack }
           }
         );
       } else {
@@ -28,7 +28,7 @@ function call_user_create(env) {
           http.status.INTERNAL_SERVER_ERROR,
           {
             desc: 'Unable to create new user',
-            error: { code: e.code, msg: e.sqlMessage }
+            error: { code: e.code, msg: e.sqlMessage, stack: e.stack }
           }
         );
       }

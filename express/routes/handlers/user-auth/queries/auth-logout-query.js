@@ -33,7 +33,7 @@ function call_auth_logout(env) {
         http.status.INTERNAL_SERVER_ERROR,
         {
           desc: 'Unable to safely logout client',
-          error: { code: e.code, msg: e.sqlMessage }
+          error: { code: e.code, msg: e.sqlMessage, stack: e.stack }
         }
       );
     }

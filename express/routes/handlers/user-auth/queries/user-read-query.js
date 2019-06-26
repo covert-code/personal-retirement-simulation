@@ -47,7 +47,7 @@ function call_user_read(env) {
         http.status.INTERNAL_SERVER_ERROR,
         {
           desc: 'Unable to read user profile',
-          error: { code: e.code, msg: e.sqlMessage }
+          error: { code: e.code, msg: e.sqlMessage, stack: e.stack }
         }
       );
     }

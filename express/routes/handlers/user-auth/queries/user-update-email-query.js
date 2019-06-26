@@ -35,7 +35,7 @@ function call_user_update_email(env) {
         http.status.INTERNAL_SERVER_ERROR,
         {
           desc: 'Unable to update email',
-          error: { code: e.code, msg: e.sqlMessage }
+          error: { code: e.code, msg: e.sqlMessage, stack: e.stack }
         }
       );
       return Promise.reject(e); // reraise error for control behavior
