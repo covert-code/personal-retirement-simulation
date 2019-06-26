@@ -14,6 +14,9 @@ module.exports = ((app) => {
   /* Endpoint to update user email */
   app.post('/api/auth/profile/update-email', require('./handlers/user-auth/user-update-email').handler);
 
+  /* Endpoint to update user password */
+  app.post('/api/auth/profile/update-password', require('./handlers/user-auth/user-update-password').handler);
+
   /* Endpoint to register a new user. */
   app.post('/api/auth/register/new', require('./handlers/user-auth/user-create').handler);
 

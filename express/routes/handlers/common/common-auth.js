@@ -48,6 +48,11 @@ function set_user_password(env, password) {
 }
 module.exports.set_user_password = set_user_password;
 
+function set_user_password_hash(env, hash) {
+  env.auth.user.password.hash = hash;
+}
+module.exports.set_user_password_hash = set_user_password_hash;
+
 // Set a user email/password pair from HTTP request body
 function req_read_user_auth(env) {
   var data = http.req_body(env).user;
@@ -80,8 +85,10 @@ module.exports.req_read_user_name = req_read_user_name;
 // Generate a hash with a random salt and write it
 async function hash(env) {
   try {
-    env.auth.user.password.hash = await crypto.hash_gen(
-      env.auth.user.password.plaintext
+    set_user_password_hash(env,
+      await crypto.hash_gen(
+        env.auth.user.password.plaintext
+      )
     );
   }
   catch (e) {
@@ -168,3 +175,32 @@ function req_read_new_user_email(env) {
   set_new_user_email(env, data.new_user_email);
 }
 module.exports.req_read_new_user_email = req_read_new_user_email;
+
+// Sets a user's new password plaintext
+function set_new_user_password(env, password) {
+  init_new_user_storage(env);
+  env.auth.new_user.password = { plaintext: password };
+}
+
+// Sets a user's new password hash
+async function set_new_user_password_hash(env) {
+  try {
+    env.auth.new_user.password.hash = await crypto.hash_gen(
+      env.auth.new_user.password.plaintext
+    );
+  }
+  catch (e) {
+    http.send(env,
+      http.status.INTERNAL_SERVER_ERROR,
+      { desc:'Unable to generate password hash', error: e }
+    );
+  }
+}
+module.exports.new_hash = set_new_user_password_hash;
+
+// Sets a user's new password plaintext from HTTP request body
+function req_read_new_user_password(env) {
+  var data = http.req_body(env).user;
+  set_new_user_password(env, data.new_user_password);
+}
+module.exports.req_read_new_user_password = req_read_new_user_password;
