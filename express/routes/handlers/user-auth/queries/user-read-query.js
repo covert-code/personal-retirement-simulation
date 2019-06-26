@@ -27,7 +27,13 @@ function call_user_read(env) {
         http.send(env,
           http.status.OK,
           {
-            select_result
+            user: {
+              user_email: select_result.user_email,
+              user_name_title: select_result.user_title,
+              user_name_first: select_result.user_fname,
+              user_name_initial: select_result.user_initial,
+              user_name_last: select_result.user_lname
+            }
           }
         )
       }
