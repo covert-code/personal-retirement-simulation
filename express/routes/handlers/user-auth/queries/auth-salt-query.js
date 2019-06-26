@@ -4,6 +4,7 @@ const http = require('../../common/common-http');
 // Calls auth_logout on user_email in env
 // Returns promise of salt
 function call_auth_salt(env) {
+  // Stored Procedure: auth_salt
   return db.call(env,
     'auth_salt',
     [ env.auth.user.user_email ]

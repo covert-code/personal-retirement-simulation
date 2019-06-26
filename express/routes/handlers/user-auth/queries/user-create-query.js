@@ -1,7 +1,7 @@
 const db = require('../../common/common-db');
 const http = require('../../common/common-http');
 
-// Calls auth_login on user credentials in env
+// Calls user_create on user information in env
 // Returns Promise of resolution
 function call_user_create(env) {
   // Stored Procedure: user_create

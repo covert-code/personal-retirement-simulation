@@ -1,8 +1,8 @@
 const common = require('../common/common');
 const auth = require('../common/common-auth');
 
-const call_auth_salt = require('./queries/user-salt-query');
-const call_auth_login = require('./queries/user-login-query');
+const call_auth_salt = require('./queries/auth-salt-query');
+const call_auth_login = require('./queries/auth-login-query');
 
 async function user_login_handler(req, res) {
   // Initialize

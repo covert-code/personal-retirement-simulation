@@ -1,7 +1,7 @@
 const db = require('../../common/common-db');
 const http = require('../../common/common-http');
 
-// Calls auth_login on user credentials in env
+// Calls user_delete on user credentials in env
 // Returns Promise of resolution
 // Sends HTTP on success
 function call_user_delete(env) {

@@ -1,7 +1,7 @@
 const common = require('../common/common');
 const auth = require('../common/common-auth');
 
-const call_auth_login = require('./queries/user-login-query');
+const call_auth_login = require('./queries/auth-login-query');
 const call_user_create = require('./queries/user-create-query');
 
 async function user_create_handler(req, res) {
