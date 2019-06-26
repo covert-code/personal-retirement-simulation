@@ -1,5 +1,6 @@
 const db = require('../../common/common-db');
 const http = require('../../common/common-http');
+const auth = require('../../common/common-auth');
 
 // Calls user_update_name on user credentials in env
 // Returns Promise of resolution
@@ -10,7 +11,7 @@ function call_user_update_name(env) {
     [
       env.auth.user.user_email,
       env.auth.user.password.hash,
-      ...env.auth.user.name // unpacking
+      ...env.auth.new_user.name // unpacking
     ]
   ).then(
     // query success handling
@@ -22,6 +23,9 @@ function call_user_update_name(env) {
           http.status.BAD_REQUEST,
           {desc: 'Username or password is incorrect'}
         );
+      } else {
+        // It worked, so write copy the result
+        auth.set_user_name(env, ...env.auth.new_user.name);
       }
     },
   ).catch(

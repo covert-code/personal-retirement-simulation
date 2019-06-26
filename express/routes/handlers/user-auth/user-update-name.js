@@ -12,8 +12,8 @@ async function user_update_name_handler(req, res) {
 
   // Read and validate login credentials
   await populate_login(env);
-  // Get user  name from request
-  auth.req_read_user_name(env);
+  // Get new user name from request
+  auth.req_read_new_user_name(env);
 
   // Stored Procedure: user_create
   await call_user_update_name(env).then(

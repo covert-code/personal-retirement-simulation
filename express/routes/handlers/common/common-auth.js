@@ -4,9 +4,15 @@ const env_lib = require('./environment.js');
 const http = require('./common-http.js');
 
 /* Init and Destroy */
+function auth_init(env) {
+  env.auth.user = {};
+  env.auth.client = {};
+}
+
 module.exports.init_env = async (env) => {
   if (env.active) {
     env.auth = {};
+    auth_init(env);
   }
 }
 
@@ -30,21 +36,23 @@ function req_read_client_auth(env) {
 module.exports.req_read_client_auth = req_read_client_auth;
 
 /* User ID and Authentication */
-// Set a user email/password pair
-function set_user_auth(env, email, password) {
-  env.auth.user =
-  {
-    user_email: email,
-    password: {
-      plaintext: password
-    }
-  }
+// Set a user email
+function set_user_email(env, email) {
+  env.auth.user.user_email = email;
 }
+module.exports.set_user_email = set_user_email;
+
+// Sets a user password
+function set_user_password(env, password) {
+  env.auth.user.password = { plaintext: password };
+}
+module.exports.set_user_password = set_user_password;
 
 // Set a user email/password pair from HTTP request body
 function req_read_user_auth(env) {
   var data = http.req_body(env).user;
-  set_user_auth(env, data.user_email, data.user_password);
+  set_user_email(env, data.user_email);
+  set_user_password(env, data.user_password);
 }
 module.exports.req_read_user_auth = req_read_user_auth;
 
@@ -69,7 +77,7 @@ function req_read_user_name(env) {
 module.exports.req_read_user_name = req_read_user_name;
 
 /* Hashing */
-// Generate a hash with a random salt
+// Generate a hash with a random salt and write it
 async function hash(env) {
   try {
     env.auth.user.password.hash = await crypto.hash_gen(
@@ -82,10 +90,25 @@ async function hash(env) {
       http.status.INTERNAL_SERVER_ERROR,
       { desc:'Unable to generate password hash', error: e }
     );
-    return;
   }
 }
 module.exports.hash = hash;
+
+// Generate a hash with a random salt and write it to new
+async function hash(env) {
+  try {
+    env.auth.user.password.hash = await crypto.hash_gen(
+      env.auth.user.password.plaintext
+    );
+  }
+  catch (e) {
+    http.send(
+      env,
+      http.status.INTERNAL_SERVER_ERROR,
+      { desc:'Unable to generate password hash', error: e }
+    );
+  }
+}
 
 // Generate a hash with a known salt
 async function hash_salty(env) {
@@ -106,3 +129,42 @@ async function hash_salty(env) {
   }
 }
 module.exports.hash_salty = hash_salty;
+
+/* Update Reading */
+function init_new_user_storage(env) {
+  if (!('new_user' in env.auth)) {
+    env.auth.new_user = {};
+  }
+}
+
+// Set a user's new name
+function set_new_user_name(env, title, first, initial, last) {
+  init_new_user_storage(env);
+  env.auth.new_user.name = [title, first, initial, last];
+}
+
+// Set a user's new name from HTTP request body
+function req_read_new_user_name(env) {
+  var data = http.req_body(env).user;
+  set_new_user_name(
+    env,
+    data.user_name_title,
+    data.user_name_first,
+    data.user_name_initial,
+    data.user_name_last
+  )
+}
+module.exports.req_read_new_user_name = req_read_new_user_name;
+
+// Sets a user's new email
+function set_new_user_email(env, email) {
+  init_new_user_storage(env);
+  env.auth.new_user.user_email = email;
+}
+
+// Set a user email/password pair from HTTP request body
+function req_read_new_user_email(env) {
+  var data = http.req_body(env).user;
+  set_new_user_email(env, data.new_user_email);
+}
+module.exports.req_read_new_user_email = req_read_new_user_email;

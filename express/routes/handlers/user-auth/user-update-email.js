@@ -12,6 +12,8 @@ async function user_update_email_handler(req, res) {
 
   // Read and validate login credentials
   await populate_login(env);
+  // Get new user email from request
+  auth.req_read_new_user_email(env);
 
   // Stored Procedure: user_create
   await call_user_update_email(env).then(

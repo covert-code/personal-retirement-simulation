@@ -1,5 +1,6 @@
 const db = require('../../common/common-db');
 const http = require('../../common/common-http');
+const auth = require('../../common/common-auth');
 
 // Calls user_update_email on user credentials in env
 // Returns Promise of resolution
@@ -11,7 +12,7 @@ function call_user_update_email(env) {
       env.auth.user.user_email,
       env.auth.user.password.hash,
       // read from body directly
-      http.req_body(env).user.new_user_email
+      env.auth.new_user.user_email
     ]
   ).then(
     // query success handling
@@ -25,7 +26,7 @@ function call_user_update_email(env) {
         );
       } else {
         // it worked, so update env with new credentials
-        env.auth.user.user_email = http.req_body(env).user.new_user_email;
+        auth.set_user_email(env, env.auth.new_user.user_email);
       }
     },
   ).catch(

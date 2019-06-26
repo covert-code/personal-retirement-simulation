@@ -1,5 +1,6 @@
 const db = require('../../common/common-db');
 const http = require('../../common/common-http');
+const auth = require('../../common/common-auth');
 
 // Calls auth_login on user credentials in env
 // Returns Promise of resolution
@@ -26,13 +27,14 @@ function call_auth_login(env) {
         return null;
       } else {
         var select_result = result[0][0];
+        auth.set_client_auth(env,
+          select_result.token_client_id,
+          select_result.token_auth_code
+        );
         http.send(env,
           http.status.OK,
           {
-            client: {
-              id: select_result.token_client_id,
-              auth_code: select_result.token_auth_code
-            }
+            client: env.auth.client
           }
         )
       }
