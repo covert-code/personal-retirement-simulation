@@ -5,6 +5,9 @@ module.exports = ((app) => {
   /* Endpoint to check whether a user exists or not. */
   app.post('/api/auth/logout', require('./handlers/user-auth/user-logout').handler);
 
+  /* Endpoint to read user profile. */
+  app.post('/api/auth/profile', require('./handlers/user-auth/user-read').handler);
+
   /* Endpoint to register a new user. */
   app.post('/api/auth/register/new', require('./handlers/user-auth/user-create').handler);
 
