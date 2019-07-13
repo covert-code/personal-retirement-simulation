@@ -31,10 +31,14 @@ module.exports.req_body = (env) => {
 
 // Generalized sending
 module.exports.send = (env, status, body) => {
-  env.http.res.status(status).send(body);
+  if (!env.http.res.headersSent) {
+    env.http.res.status(status).send(body);
+  }
 }
 
 module.exports.ok = (env) => {
-  env.http.res.status(http_status.OK).end();
+  if (!env.http.res.headersSent) {
+    env.http.res.status(http_status.OK).end();
+  }
 }
 
