@@ -1212,68 +1212,6 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `survey_pd_create` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `survey_pd_create`(
-	IN token_client_id int(10) unsigned,
-	IN token_auth_code char(40),
-	IN survey_pd_address_1 varchar(255),
-	IN survey_pd_address_2 varchar(255),
-	IN survey_pd_addr_city varchar(40),
-	IN survey_pd_addr_state varchar(2),
-	IN survey_pd_addr_zip varchar(10),
-	IN survey_pd_birthdate date,
-	IN survey_pd_income decimal(15,2) unsigned,
-	IN survey_pd_marital varchar(45)
-)
-BEGIN
-
-DECLARE user_id int(10) unsigned;
-SET user_id = auth_session_id(token_client_id, token_auth_code);
-
-IF (user_id IS NOT NULL) THEN
-	INSERT INTO retirement_simulation_study.survey_participants
-	(
-		survey_participants.user_id,
-		survey_participants.survey_pd_preseed,
-		survey_participants.survey_pd_address_1,
-		survey_participants.survey_pd_address_2,
-		survey_participants.survey_pd_addr_city,
-		survey_participants.survey_pd_addr_state,
-		survey_participants.survey_pd_addr_zip,
-		survey_participants.survey_pd_birthdate,
-		survey_participants.survey_pd_income,
-		survey_participants.survey_pd_marital
-	)
-	VALUES
-	(
-		user_id,
-		false,
-		survey_pd_address_1,
-		survey_pd_address_2,
-		survey_pd_addr_city,
-		survey_pd_addr_state,
-		survey_pd_addr_zip,
-		survey_pd_birthdate,
-		survey_pd_income,
-		survey_pd_marital
-	);
-END IF;
-
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `survey_pd_read` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -1313,7 +1251,7 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `survey_pd_update` */;
+/*!50003 DROP PROCEDURE IF EXISTS `survey_pd_write` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -1323,9 +1261,9 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `survey_pd_update`(
+CREATE DEFINER=`root`@`localhost` PROCEDURE `survey_pd_write`(
 	IN token_client_id int(10) unsigned,
-    IN token_auth_code char(40),
+	IN token_auth_code char(40),
 	IN survey_pd_address_1 varchar(255),
 	IN survey_pd_address_2 varchar(255),
 	IN survey_pd_addr_city varchar(40),
@@ -1341,75 +1279,32 @@ DECLARE user_id int(10) unsigned;
 SET user_id = auth_session_id(token_client_id, token_auth_code);
 
 IF (user_id IS NOT NULL) THEN
-	UPDATE retirement_simulation_study.survey_participants
-	SET
-		survey_participants.survey_pd_preseed = false,
-		survey_participants.survey_pd_address_1 = survey_pd_address_1,
-		survey_participants.survey_pd_address_2 = survey_pd_address_2,
-		survey_participants.survey_pd_addr_city = survey_pd_addr_city,
-		survey_participants.survey_pd_addr_state = survey_pd_addr_state,
-		survey_participants.survey_pd_addr_zip = survey_pd_addr_zip,
-		survey_participants.survey_pd_birthdate = survey_pd_birthdate,
-		survey_participants.survey_pd_income = survey_pd_income,
-		survey_participants.survey_pd_marital = survey_pd_marital
-	WHERE
-		survey_participants.user_id = user_id;
-END IF;
-
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `survey_rt_create` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `survey_rt_create`(
-	IN token_client_id int(10) unsigned,
-    IN token_auth_code char(40),
-	IN survey_rt_age int(10) unsigned,
-	IN survey_rt_goal decimal(15,2) unsigned,
-	IN survey_rt_curr_savings decimal(15,2) unsigned,
-	IN survey_rt_employer_deposit double unsigned,
-	IN survey_rt_lifetime_concern bit(1),
-	IN survey_rt_ss bit(1)
-)
-BEGIN
-
-DECLARE user_id int(10) unsigned;
-SET user_id = auth_session_id(token_client_id, token_auth_code);
-
-IF (user_id IS NOT NULL) THEN
-    INSERT INTO retirement_simulation_study.survey_retirement
+	REPLACE INTO retirement_simulation_study.survey_participants
 	(
-		survey_retirement.user_id,
-        survey_retirement.survey_rt_preseed,
-		survey_retirement.survey_rt_age,
-		survey_retirement.survey_rt_goal,
-		survey_retirement.survey_rt_curr_savings,
-		survey_retirement.survey_rt_employer_deposit,
-		survey_retirement.survey_rt_lifetime_concern,
-		survey_retirement.survey_rt_ss
-    )
+		survey_participants.user_id,
+		survey_participants.survey_pd_preseed,
+		survey_participants.survey_pd_address_1,
+		survey_participants.survey_pd_address_2,
+		survey_participants.survey_pd_addr_city,
+		survey_participants.survey_pd_addr_state,
+		survey_participants.survey_pd_addr_zip,
+		survey_participants.survey_pd_birthdate,
+		survey_participants.survey_pd_income,
+		survey_participants.survey_pd_marital
+	)
 	VALUES
 	(
 		user_id,
-        false,
-		survey_rt_age,
-		survey_rt_goal,
-		survey_rt_curr_savings,
-		survey_rt_employer_deposit,
-		survey_rt_lifetime_concern,
-		survey_rt_ss
-    );
+		false,
+		survey_pd_address_1,
+		survey_pd_address_2,
+		survey_pd_addr_city,
+		survey_pd_addr_state,
+		survey_pd_addr_zip,
+		survey_pd_birthdate,
+		survey_pd_income,
+		survey_pd_marital
+	);
 END IF;
 
 END ;;
@@ -1455,7 +1350,7 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `survey_rt_update` */;
+/*!50003 DROP PROCEDURE IF EXISTS `survey_rt_write` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -1465,7 +1360,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `survey_rt_update`(
+CREATE DEFINER=`root`@`localhost` PROCEDURE `survey_rt_write`(
 	IN token_client_id int(10) unsigned,
     IN token_auth_code char(40),
 	IN survey_rt_age int(10) unsigned,
@@ -1481,17 +1376,28 @@ DECLARE user_id int(10) unsigned;
 SET user_id = auth_session_id(token_client_id, token_auth_code);
 
 IF (user_id IS NOT NULL) THEN
-	UPDATE retirement_simulation_study.survey_retirement
-	SET
-		survey_retirement.survey_rt_preseed = false,
-		survey_retirement.survey_rt_age = survey_rt_age,
-		survey_retirement.survey_rt_goal = survey_rt_goal,
-		survey_retirement.survey_rt_curr_savings = survey_rt_curr_savings,
-		survey_retirement.survey_rt_employer_deposit = survey_rt_employer_deposit,
-		survey_retirement.survey_rt_lifetime_concern = survey_rt_lifetime_concern,
-		survey_retirement.survey_rt_ss = survey_rt_ss
-	WHERE
-		survey_retirement.user_id = user_id;
+    REPLACE INTO retirement_simulation_study.survey_retirement
+	(
+		survey_retirement.user_id,
+        survey_retirement.survey_rt_preseed,
+		survey_retirement.survey_rt_age,
+		survey_retirement.survey_rt_goal,
+		survey_retirement.survey_rt_curr_savings,
+		survey_retirement.survey_rt_employer_deposit,
+		survey_retirement.survey_rt_lifetime_concern,
+		survey_retirement.survey_rt_ss
+    )
+	VALUES
+	(
+		user_id,
+        false,
+		survey_rt_age,
+		survey_rt_goal,
+		survey_rt_curr_savings,
+		survey_rt_employer_deposit,
+		survey_rt_lifetime_concern,
+		survey_rt_ss
+    );
 END IF;
 
 END ;;
@@ -1738,4 +1644,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-07-18 15:40:16
+-- Dump completed on 2019-07-18 15:42:41
