@@ -1291,6 +1291,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `survey_pd_read`(
 BEGIN
 
 SELECT
+	survey_participants.survey_pd_preseed,
     survey_participants.survey_pd_address_1,
     survey_participants.survey_pd_address_2,
     survey_participants.survey_pd_addr_city,
@@ -1305,54 +1306,6 @@ WHERE
 	token_client_id,
 		token_auth_code
 	);
-
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `survey_pd_status` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `survey_pd_status`(
-	IN token_client_id int(10) unsigned,
-    IN token_auth_code char(40)
-)
-BEGIN
-
-DECLARE user_id int(10) unsigned;
-DECLARE record_exists bool;
-DECLARE record_preseed bool;
-
-SET user_id = auth_session_id(token_client_id, token_auth_code);
-
-/* Determine record existence */
-SET record_exists = EXISTS(
-	SELECT * FROM retirement_simulation_study.survey_participants
-	WHERE survey_participants.user_id = user_id
-);
-
-/* Determine existing record preseed status */
-IF (NOT record_exists) THEN
-	SET record_preseed = false;
-ELSE
-	SELECT survey_participants.survey_pd_preseed INTO record_preseed
-		FROM retirement_simulation_study.survey_participants
-		WHERE survey_participants.user_id = user_id;
-END IF;
-
-/* Output */
-SELECT
-	record_exists AS `exists`,
-	record_preseed AS preseed;
 
 END ;;
 DELIMITER ;
@@ -1482,6 +1435,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `survey_rt_read`(
 BEGIN
 
 SELECT
+	survey_retirement.survey_rt_preseed,
     survey_retirement.survey_rt_age,
     survey_retirement.survey_rt_goal,
     survey_retirement.survey_rt_curr_savings,
@@ -1494,54 +1448,6 @@ WHERE
 		token_client_id,
         token_auth_code
 	);
-
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `survey_rt_status` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `survey_rt_status`(
-	IN token_client_id int(10) unsigned,
-    IN token_auth_code char(40)
-)
-BEGIN
-
-DECLARE user_id int(10) unsigned;
-DECLARE record_exists bool;
-DECLARE record_preseed bool;
-
-SET user_id = auth_session_id(token_client_id, token_auth_code);
-
-/* Determine record existence */
-SET record_exists = EXISTS(
-	SELECT * FROM retirement_simulation_study.survey_retirement
-	WHERE survey_retirement.user_id = user_id
-);
-
-/* Determine existing record preseed status */
-IF (NOT record_exists) THEN
-	SET record_preseed = false;
-ELSE
-	SELECT survey_retirement.survey_rt_preseed INTO record_preseed
-		FROM retirement_simulation_study.survey_retirement
-		WHERE survey_retirement.user_id = user_id;
-END IF;
-
-/* Output */
-SELECT
-	record_exists AS `exists`,
-	record_preseed AS preseed;
 
 END ;;
 DELIMITER ;
@@ -1832,4 +1738,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-06-25  2:52:15
+-- Dump completed on 2019-07-18 15:40:16
