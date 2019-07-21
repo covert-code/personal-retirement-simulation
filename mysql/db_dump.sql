@@ -260,7 +260,8 @@ CREATE TABLE `survey_participants` (
   `survey_pd_addr_state` varchar(2) NOT NULL,
   `survey_pd_addr_zip` varchar(10) NOT NULL,
   `survey_pd_birthdate` date NOT NULL,
-  `survey_pd_income` decimal(15,2) unsigned NOT NULL,
+  `survey_pd_income_min` decimal(15,2) unsigned NOT NULL,
+  `survey_pd_income_max` decimal(15,2) unsigned NOT NULL,
   `survey_pd_marital` varchar(45) NOT NULL,
   PRIMARY KEY (`user_id`),
   CONSTRAINT `participant_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -1236,7 +1237,8 @@ SELECT
     survey_participants.survey_pd_addr_state,
     survey_participants.survey_pd_addr_zip,
     survey_participants.survey_pd_birthdate,
-    survey_participants.survey_pd_income,
+    survey_participants.survey_pd_income_min,
+    survey_participants.survey_pd_income_max,
     survey_participants.survey_pd_marital
 FROM retirement_simulation_study.survey_participants
 WHERE
@@ -1270,7 +1272,8 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `survey_pd_write`(
 	IN survey_pd_addr_state varchar(2),
 	IN survey_pd_addr_zip varchar(10),
 	IN survey_pd_birthdate date,
-	IN survey_pd_income decimal(15,2) unsigned,
+	IN survey_pd_income_min decimal(15,2) unsigned,
+	IN survey_pd_income_max decimal(15,2) unsigned,
 	IN survey_pd_marital varchar(45)
 )
 BEGIN
@@ -1289,7 +1292,8 @@ IF (user_id IS NOT NULL) THEN
 		survey_participants.survey_pd_addr_state,
 		survey_participants.survey_pd_addr_zip,
 		survey_participants.survey_pd_birthdate,
-		survey_participants.survey_pd_income,
+		survey_participants.survey_pd_income_min,
+		survey_participants.survey_pd_income_max,
 		survey_participants.survey_pd_marital
 	)
 	VALUES
@@ -1302,7 +1306,8 @@ IF (user_id IS NOT NULL) THEN
 		survey_pd_addr_state,
 		survey_pd_addr_zip,
 		survey_pd_birthdate,
-		survey_pd_income,
+		survey_pd_income_min,
+		survey_pd_income_max,
 		survey_pd_marital
 	);
 END IF;
@@ -1644,4 +1649,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-07-18 15:42:41
+-- Dump completed on 2019-07-21 13:55:58

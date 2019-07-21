@@ -33,7 +33,10 @@ function call_survey_pd_read(env) {
             zip: data.survey_pd_addr_zip
           },
           birthdate: data.survey_pd_birthdate,
-          income: data.survey_pd_income,
+          income: {
+            min: data.survey_pd_income_min,
+            max: data.survey_pd_income_max
+          },
           marital: data.survey_pd_marital
         }
       }

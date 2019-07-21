@@ -17,7 +17,8 @@ function call_survey_pd_write(env, responses) {
       responses.address.state,
       responses.address.zip,
       responses.birthdate,
-      responses.income,
+      responses.income.min,
+      responses.income.max,
       responses.marital
     ]
   ).then(
