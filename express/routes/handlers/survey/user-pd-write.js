@@ -24,5 +24,8 @@ async function user_pd_read_handler(req, res) {
 module.exports.handler = user_pd_read_handler;
 
 function get_survey_pd_responses(env) {
-  return http.req_body(env).survey_pd;
+  var responses = http.req_body(env).survey_pd;
+  // construct Date object
+  responses.birthdate = new Date(responses.birthdate);
+  return responses;
 }
