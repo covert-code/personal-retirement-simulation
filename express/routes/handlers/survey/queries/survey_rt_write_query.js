@@ -3,6 +3,7 @@ const http = require('../../common/common-http');
 
 // Calls survey_rt_write on client credentials in env
 // Returns Promise of resolution
+// Sends HTTP
 function call_survey_rt_write(env, responses) {
   // Stored Procedure: survey_rt_write
   return db.call(env,
@@ -25,6 +26,8 @@ function call_survey_rt_write(env, responses) {
           http.status.BAD_REQUEST,
           { desc: 'Bad or expired client credentials' }
         );
+      } else {
+        http.ok(env);
       }
     }
   ).catch(

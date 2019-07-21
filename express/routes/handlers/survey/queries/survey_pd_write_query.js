@@ -29,6 +29,8 @@ function call_survey_pd_write(env, responses) {
           http.status.BAD_REQUEST,
           { desc: 'Bad or expired client credentials' }
         );
+      } else {
+        http.ok(env);
       }
     }
   ).catch(
