@@ -27,7 +27,7 @@ function call_survey_rt_read(env) {
           preseed: data.survey_rt_preseed[0] == 1, // convert bit buffer to bool
           goal: {
             age: data.survey_rt_age,
-            goal: data.survey_rt_goal
+            amount: data.survey_rt_goal
           },
           current_savings: data.survey_rt_curr_savings,
           employer_deposit: data.survey_rt_employer_deposit,
